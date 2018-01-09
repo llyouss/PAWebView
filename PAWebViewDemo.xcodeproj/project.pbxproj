@@ -1,0 +1,557 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EC2BD2F12004B3DD00912D5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD2F02004B3DD00912D5B /* AppDelegate.m */; };
+		EC2BD2F42004B3DD00912D5B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD2F32004B3DD00912D5B /* ViewController.m */; };
+		EC2BD2F72004B3DD00912D5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC2BD2F52004B3DD00912D5B /* Main.storyboard */; };
+		EC2BD2F92004B3DD00912D5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC2BD2F82004B3DD00912D5B /* Assets.xcassets */; };
+		EC2BD2FC2004B3DD00912D5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC2BD2FA2004B3DD00912D5B /* LaunchScreen.storyboard */; };
+		EC2BD2FF2004B3DD00912D5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD2FE2004B3DD00912D5B /* main.m */; };
+		EC2BD3092004B3DD00912D5B /* PAWebViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3082004B3DD00912D5B /* PAWebViewDemoTests.m */; };
+		EC2BD3142004B3DE00912D5B /* PAWebViewDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3132004B3DE00912D5B /* PAWebViewDemoUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EC2BD3052004B3DD00912D5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC2BD2E42004B3DD00912D5B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EC2BD2EB2004B3DD00912D5B;
+			remoteInfo = PAWebViewDemo;
+		};
+		EC2BD3102004B3DE00912D5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC2BD2E42004B3DD00912D5B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EC2BD2EB2004B3DD00912D5B;
+			remoteInfo = PAWebViewDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EC2BD2EC2004B3DD00912D5B /* PAWebViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PAWebViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC2BD2EF2004B3DD00912D5B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		EC2BD2F02004B3DD00912D5B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		EC2BD2F22004B3DD00912D5B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		EC2BD2F32004B3DD00912D5B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		EC2BD2F62004B3DD00912D5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EC2BD2F82004B3DD00912D5B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EC2BD2FB2004B3DD00912D5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EC2BD2FD2004B3DD00912D5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC2BD2FE2004B3DD00912D5B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EC2BD3042004B3DD00912D5B /* PAWebViewDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PAWebViewDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC2BD3082004B3DD00912D5B /* PAWebViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAWebViewDemoTests.m; sourceTree = "<group>"; };
+		EC2BD30A2004B3DD00912D5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC2BD30F2004B3DE00912D5B /* PAWebViewDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PAWebViewDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC2BD3132004B3DE00912D5B /* PAWebViewDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAWebViewDemoUITests.m; sourceTree = "<group>"; };
+		EC2BD3152004B3DE00912D5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EC2BD2E92004B3DD00912D5B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC2BD3012004B3DD00912D5B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC2BD30C2004B3DE00912D5B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EC2BD2E32004B3DD00912D5B = {
+			isa = PBXGroup;
+			children = (
+				EC2BD2EE2004B3DD00912D5B /* PAWebViewDemo */,
+				EC2BD3072004B3DD00912D5B /* PAWebViewDemoTests */,
+				EC2BD3122004B3DE00912D5B /* PAWebViewDemoUITests */,
+				EC2BD2ED2004B3DD00912D5B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EC2BD2ED2004B3DD00912D5B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EC2BD2EC2004B3DD00912D5B /* PAWebViewDemo.app */,
+				EC2BD3042004B3DD00912D5B /* PAWebViewDemoTests.xctest */,
+				EC2BD30F2004B3DE00912D5B /* PAWebViewDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EC2BD2EE2004B3DD00912D5B /* PAWebViewDemo */ = {
+			isa = PBXGroup;
+			children = (
+				EC2BD2EF2004B3DD00912D5B /* AppDelegate.h */,
+				EC2BD2F02004B3DD00912D5B /* AppDelegate.m */,
+				EC2BD2F22004B3DD00912D5B /* ViewController.h */,
+				EC2BD2F32004B3DD00912D5B /* ViewController.m */,
+				EC2BD2F52004B3DD00912D5B /* Main.storyboard */,
+				EC2BD2F82004B3DD00912D5B /* Assets.xcassets */,
+				EC2BD2FA2004B3DD00912D5B /* LaunchScreen.storyboard */,
+				EC2BD2FD2004B3DD00912D5B /* Info.plist */,
+				EC2BD2FE2004B3DD00912D5B /* main.m */,
+			);
+			path = PAWebViewDemo;
+			sourceTree = "<group>";
+		};
+		EC2BD3072004B3DD00912D5B /* PAWebViewDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				EC2BD3082004B3DD00912D5B /* PAWebViewDemoTests.m */,
+				EC2BD30A2004B3DD00912D5B /* Info.plist */,
+			);
+			path = PAWebViewDemoTests;
+			sourceTree = "<group>";
+		};
+		EC2BD3122004B3DE00912D5B /* PAWebViewDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EC2BD3132004B3DE00912D5B /* PAWebViewDemoUITests.m */,
+				EC2BD3152004B3DE00912D5B /* Info.plist */,
+			);
+			path = PAWebViewDemoUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EC2BD2EB2004B3DD00912D5B /* PAWebViewDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC2BD3182004B3DE00912D5B /* Build configuration list for PBXNativeTarget "PAWebViewDemo" */;
+			buildPhases = (
+				EC2BD2E82004B3DD00912D5B /* Sources */,
+				EC2BD2E92004B3DD00912D5B /* Frameworks */,
+				EC2BD2EA2004B3DD00912D5B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PAWebViewDemo;
+			productName = PAWebViewDemo;
+			productReference = EC2BD2EC2004B3DD00912D5B /* PAWebViewDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EC2BD3032004B3DD00912D5B /* PAWebViewDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC2BD31B2004B3DE00912D5B /* Build configuration list for PBXNativeTarget "PAWebViewDemoTests" */;
+			buildPhases = (
+				EC2BD3002004B3DD00912D5B /* Sources */,
+				EC2BD3012004B3DD00912D5B /* Frameworks */,
+				EC2BD3022004B3DD00912D5B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EC2BD3062004B3DD00912D5B /* PBXTargetDependency */,
+			);
+			name = PAWebViewDemoTests;
+			productName = PAWebViewDemoTests;
+			productReference = EC2BD3042004B3DD00912D5B /* PAWebViewDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EC2BD30E2004B3DE00912D5B /* PAWebViewDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC2BD31E2004B3DE00912D5B /* Build configuration list for PBXNativeTarget "PAWebViewDemoUITests" */;
+			buildPhases = (
+				EC2BD30B2004B3DE00912D5B /* Sources */,
+				EC2BD30C2004B3DE00912D5B /* Frameworks */,
+				EC2BD30D2004B3DE00912D5B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EC2BD3112004B3DE00912D5B /* PBXTargetDependency */,
+			);
+			name = PAWebViewDemoUITests;
+			productName = PAWebViewDemoUITests;
+			productReference = EC2BD30F2004B3DE00912D5B /* PAWebViewDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EC2BD2E42004B3DD00912D5B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = llyouss;
+				TargetAttributes = {
+					EC2BD2EB2004B3DD00912D5B = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					EC2BD3032004B3DD00912D5B = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EC2BD2EB2004B3DD00912D5B;
+					};
+					EC2BD30E2004B3DE00912D5B = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EC2BD2EB2004B3DD00912D5B;
+					};
+				};
+			};
+			buildConfigurationList = EC2BD2E72004B3DD00912D5B /* Build configuration list for PBXProject "PAWebViewDemo" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EC2BD2E32004B3DD00912D5B;
+			productRefGroup = EC2BD2ED2004B3DD00912D5B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EC2BD2EB2004B3DD00912D5B /* PAWebViewDemo */,
+				EC2BD3032004B3DD00912D5B /* PAWebViewDemoTests */,
+				EC2BD30E2004B3DE00912D5B /* PAWebViewDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EC2BD2EA2004B3DD00912D5B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC2BD2FC2004B3DD00912D5B /* LaunchScreen.storyboard in Resources */,
+				EC2BD2F92004B3DD00912D5B /* Assets.xcassets in Resources */,
+				EC2BD2F72004B3DD00912D5B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC2BD3022004B3DD00912D5B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC2BD30D2004B3DE00912D5B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EC2BD2E82004B3DD00912D5B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC2BD2F42004B3DD00912D5B /* ViewController.m in Sources */,
+				EC2BD2FF2004B3DD00912D5B /* main.m in Sources */,
+				EC2BD2F12004B3DD00912D5B /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC2BD3002004B3DD00912D5B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC2BD3092004B3DD00912D5B /* PAWebViewDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC2BD30B2004B3DE00912D5B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC2BD3142004B3DE00912D5B /* PAWebViewDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EC2BD3062004B3DD00912D5B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EC2BD2EB2004B3DD00912D5B /* PAWebViewDemo */;
+			targetProxy = EC2BD3052004B3DD00912D5B /* PBXContainerItemProxy */;
+		};
+		EC2BD3112004B3DE00912D5B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EC2BD2EB2004B3DD00912D5B /* PAWebViewDemo */;
+			targetProxy = EC2BD3102004B3DE00912D5B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EC2BD2F52004B3DD00912D5B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EC2BD2F62004B3DD00912D5B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EC2BD2FA2004B3DD00912D5B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EC2BD2FB2004B3DD00912D5B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EC2BD3162004B3DE00912D5B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		EC2BD3172004B3DE00912D5B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EC2BD3192004B3DE00912D5B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 84WE5W9KZN;
+				INFOPLIST_FILE = PAWebViewDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Pactera.PAWebViewDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EC2BD31A2004B3DE00912D5B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 84WE5W9KZN;
+				INFOPLIST_FILE = PAWebViewDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Pactera.PAWebViewDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EC2BD31C2004B3DE00912D5B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 84WE5W9KZN;
+				INFOPLIST_FILE = PAWebViewDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Pactera.PAWebViewDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PAWebViewDemo.app/PAWebViewDemo";
+			};
+			name = Debug;
+		};
+		EC2BD31D2004B3DE00912D5B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 84WE5W9KZN;
+				INFOPLIST_FILE = PAWebViewDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Pactera.PAWebViewDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PAWebViewDemo.app/PAWebViewDemo";
+			};
+			name = Release;
+		};
+		EC2BD31F2004B3DE00912D5B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 84WE5W9KZN;
+				INFOPLIST_FILE = PAWebViewDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Pactera.PAWebViewDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PAWebViewDemo;
+			};
+			name = Debug;
+		};
+		EC2BD3202004B3DE00912D5B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 84WE5W9KZN;
+				INFOPLIST_FILE = PAWebViewDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Pactera.PAWebViewDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PAWebViewDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EC2BD2E72004B3DD00912D5B /* Build configuration list for PBXProject "PAWebViewDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC2BD3162004B3DE00912D5B /* Debug */,
+				EC2BD3172004B3DE00912D5B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC2BD3182004B3DE00912D5B /* Build configuration list for PBXNativeTarget "PAWebViewDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC2BD3192004B3DE00912D5B /* Debug */,
+				EC2BD31A2004B3DE00912D5B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC2BD31B2004B3DE00912D5B /* Build configuration list for PBXNativeTarget "PAWebViewDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC2BD31C2004B3DE00912D5B /* Debug */,
+				EC2BD31D2004B3DE00912D5B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC2BD31E2004B3DE00912D5B /* Build configuration list for PBXNativeTarget "PAWebViewDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC2BD31F2004B3DE00912D5B /* Debug */,
+				EC2BD3202004B3DE00912D5B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EC2BD2E42004B3DD00912D5B /* Project object */;
+}
