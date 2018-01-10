@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.window =[[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+    ViewController *root = [[ViewController alloc]init];
+    UINavigationController *mainNavc = [[UINavigationController alloc]initWithRootViewController:root];
+    self.window.rootViewController = mainNavc;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
