@@ -1,2 +1,3 @@
-# PAWeViewDemo
-WKWebView的封装
+# PAWeView
+ An component WebView for iOS base on WKWebView 
+ 
