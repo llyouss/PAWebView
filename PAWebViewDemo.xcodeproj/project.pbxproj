@@ -33,6 +33,7 @@
 		EC2BD38A2006F79E00912D5B /* WKJSFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3762006F79E00912D5B /* WKJSFunction.m */; };
 		EC2BD38B2006F79E00912D5B /* WKScanQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3782006F79E00912D5B /* WKScanQRCode.m */; };
 		EC2BD38C2006F79E00912D5B /* WKWebView+POST.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD37A2006F79E00912D5B /* WKWebView+POST.m */; };
+		EC2BD38F2007057600912D5B /* PAWebview.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2BD38E2007057600912D5B /* PAWebview.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		EC2BD3782006F79E00912D5B /* WKScanQRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKScanQRCode.m; sourceTree = "<group>"; };
 		EC2BD3792006F79E00912D5B /* WKWebView+POST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+POST.h"; sourceTree = "<group>"; };
 		EC2BD37A2006F79E00912D5B /* WKWebView+POST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+POST.m"; sourceTree = "<group>"; };
+		EC2BD38E2007057600912D5B /* PAWebview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PAWebview.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 		EC2BD2E32004B3DD00912D5B = {
 			isa = PBXGroup;
 			children = (
+				EC2BD38D2007052700912D5B /* Image */,
 				EC2BD3572006F79E00912D5B /* PAWebView */,
 				EC2BD2EE2004B3DD00912D5B /* PAWebViewDemo */,
 				EC2BD3072004B3DD00912D5B /* PAWebViewDemoTests */,
@@ -246,6 +249,14 @@
 			path = views;
 			sourceTree = "<group>";
 		};
+		EC2BD38D2007052700912D5B /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				EC2BD38E2007057600912D5B /* PAWebview.png */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -357,6 +368,7 @@
 				EC2BD3852006F79E00912D5B /* PAWebBack.png in Resources */,
 				EC2BD3842006F79E00912D5B /* navigationbar_more@3x.png in Resources */,
 				EC2BD2F92004B3DD00912D5B /* Assets.xcassets in Resources */,
+				EC2BD38F2007057600912D5B /* PAWebview.png in Resources */,
 				EC2BD2F72004B3DD00912D5B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
