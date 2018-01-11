@@ -5,7 +5,7 @@ PAWeView is an extensible WebView which is built on top of WKWebView, the modern
 ## Sample Project
 For a complete example on how to use PAWeView, see the Sample Project.
 ## The Class Structure Chart of MJRefresh
-![Image text](https://raw.github.com/llyouss/repositpry/master/PAWebView/Image/PAWebView.png)
+![Image text](https://raw.github.com/llyouss/repositpry/master/PAWebView/Image/PAWebview.png)
 ## Minimum Requirements
  - Deployment: iOS 8.0
 
