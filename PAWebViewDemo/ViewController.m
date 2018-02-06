@@ -43,7 +43,8 @@ typedef void (^runCaseBlock)(id);
     
     //加载网页
     [webView loadRequestURL:[NSURL URLWithString:@"https://www.sina.cn"]];
-    //webView loadLocalHTMLWithFileName:<#(NSString *)#> 加载本地网页
+//      [webView loadLocalHTMLWithFileName:@"main"];
+//    webView loadLocalHTMLWithFileName:<#(NSString *)#> 加载本地网页
 //    [webView reload]; //重新加载网页
 //    [webView reloadFromOrigin]; //无视缓存，重新加载服务器最新的网页
     
@@ -67,16 +68,19 @@ typedef void (^runCaseBlock)(id);
 
 - (void)PAUserContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
     NSLog(@"监听JS调用IC");
+    ((runCaseBlock)self.runBlockDict[message.name])(message.body);
 }
 
 #pragma mark - JS 调用 OC
 - (void)addMessageHandleName
 {
     PAWebView *webView = [PAWebView shareInstance];
-    [webView addScriptMessageHandlerWithName:@[@"AliPay",@"weixin"]];
+//    webView.messageHandlerdelegate =self;
+//    [webView addScriptMessageHandlerWithName:@[@"AliPay",@"weixin",@"webViewApp"]];
+    
     __weak typeof(self)weekSelf = self;
-    [webView addScriptMessageHandlerWithName:@[@"AliPay",@"weixin"] observeValue:^(WKUserContentController *userContentController, WKScriptMessage *message) {
-        
+    [webView addScriptMessageHandlerWithName:@[@"AliPay",@"weixin",@"webViewApp"] observeValue:^(WKUserContentController *userContentController, WKScriptMessage *message) {
+
         //JS调用OC处理
         __strong typeof(self)strongSelf = weekSelf;
         ((runCaseBlock)strongSelf.runBlockDict[message.name])(message.body);
@@ -97,7 +101,11 @@ typedef void (^runCaseBlock)(id);
           @"weixin":
               ^(id body) {
                   NSLog(@"请求微信事件");
-              }
+              },
+          @"webViewApp":
+              ^(id body) {
+                  NSLog(@"请求微信事件");
+              },
           };
     }
     return _runBlockDict;

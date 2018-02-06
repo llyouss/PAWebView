@@ -192,6 +192,7 @@ static MessageBlock messageCallback = nil;
                                                     encoding:NSUTF8StringEncoding
                                                        error:nil];
     [self.webView loadHTMLString:htmlCont baseURL:baseURL];
+    
 }
 
 /**
@@ -272,8 +273,9 @@ static MessageBlock messageCallback = nil;
 {
     /* removeScriptMessageHandlerForName 同时使用，否则内存泄漏 */
     for (NSString * objStr in nameArr) {
-        [_config.userContentController addScriptMessageHandler:self name:objStr];
+        [self.config.userContentController addScriptMessageHandler:self name:objStr];
     }
+    
     self.messageHandlerName = nameArr;
 }
 
@@ -352,7 +354,8 @@ static MessageBlock messageCallback = nil;
 {
     NSString *scheme = navigationAction.request.URL.scheme.lowercaseString;
    
-    if (![scheme containsString:@"https"] && ![scheme containsString:@"http"] && ![scheme containsString:@"about"]) {
+    if (![scheme containsString:@"https"] && ![scheme containsString:@"http"]
+        && ![scheme containsString:@"about"] && ![scheme containsString:@"file"]) {
         // 对于跨域，需要手动跳转， 用系统浏览器（Safari）打开
         if ([navigationAction.request.URL.absoluteString.lowercaseString containsString:@"ituns.apple.com"] ||
             [navigationAction.request.URL.absoluteString containsString:@"itms-appss"])
@@ -402,7 +405,7 @@ static MessageBlock messageCallback = nil;
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
     isloadSuccess = YES;
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+
         //获取当前 URLString
         [webView evaluateJavaScript:@"window.location.href" completionHandler:^(id _Nullable urlStr, NSError * _Nullable error) {
             if (error == nil) {
@@ -417,7 +420,6 @@ static MessageBlock messageCallback = nil;
                 // 获取页面高度，并重置 webview 的 frame
                 NSLog(@"html 的高度：%@", result);
             }];
-    });
 }
 
 /** 接收到重定向时会回调 */
