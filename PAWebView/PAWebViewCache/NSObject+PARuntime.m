@@ -116,10 +116,10 @@ const void *ba_methodListKey = "ba_methodListKey";
         
         NSString *methodName_OC = NSStringFromSelector(methodName);
         
-        //        IMP imp = method_getImplementation(method);
+        //IMP imp = method_getImplementation(method);
         const char *name_s =sel_getName(method_getName(method));
         int arguments = method_getNumberOfArguments(method);
-        const char* encoding =method_getTypeEncoding(method);
+        const char* encoding = method_getTypeEncoding(method);
         NSLog(@"方法名：%@,参数个数：%d,编码方式：%@",[NSString stringWithUTF8String:name_s],
               arguments,
               [NSString stringWithUTF8String:encoding]);

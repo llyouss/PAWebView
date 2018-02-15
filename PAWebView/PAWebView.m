@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "WKWebView+PAWebCookie.h"
 #import "WKWebView+PAWebCache.h"
-#import "WKScanQRCode.h"
+#import "WKWebView+LongPress.h"
 
 #import "NSURL+PATool.h"
 #import "UIAlertController+WKWebAlert.h"
@@ -111,7 +111,8 @@ static MessageBlock messageCallback = nil;
         //添加页面跳转通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRequestFromNotification:) name:NotiName_LoadRequest object:nil];
         //添加长按手势
-        [[WKScanQRCode shareInstance] addGestureRecognizerObserverWebElementsWithWebView:_webView];
+        [_webView  addGestureRecognizerObserverWebElements];
+//        [[WKScanQRCode shareInstance] addGestureRecognizerObserverWebElementsWithWebView:_webView];
     }
 
     return _webView;
@@ -192,7 +193,6 @@ static MessageBlock messageCallback = nil;
                                                     encoding:NSUTF8StringEncoding
                                                        error:nil];
     [self.webView loadHTMLString:htmlCont baseURL:baseURL];
-    
 }
 
 /**
@@ -272,10 +272,10 @@ static MessageBlock messageCallback = nil;
 - (void)addScriptMessageHandlerWithName:(NSArray<NSString *> *)nameArr
 {
     /* removeScriptMessageHandlerForName 同时使用，否则内存泄漏 */
+    if (self.config.userContentController)return;
     for (NSString * objStr in nameArr) {
         [self.config.userContentController addScriptMessageHandler:self name:objStr];
     }
-    
     self.messageHandlerName = nameArr;
 }
 
@@ -353,9 +353,7 @@ static MessageBlock messageCallback = nil;
 (WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     NSString *scheme = navigationAction.request.URL.scheme.lowercaseString;
-   
-    if (![scheme containsString:@"https"] && ![scheme containsString:@"http"]
-        && ![scheme containsString:@"about"] && ![scheme containsString:@"file"]) {
+    if (![scheme containsString:@"http"] && ![scheme containsString:@"about"] && ![scheme containsString:@"file"]) {
         // 对于跨域，需要手动跳转， 用系统浏览器（Safari）打开
         if ([navigationAction.request.URL.absoluteString.lowercaseString containsString:@"ituns.apple.com"] ||
             [navigationAction.request.URL.absoluteString containsString:@"itms-appss"])
@@ -404,8 +402,7 @@ static MessageBlock messageCallback = nil;
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    isloadSuccess = YES;
-
+        isloadSuccess = YES;
         //获取当前 URLString
         [webView evaluateJavaScript:@"window.location.href" completionHandler:^(id _Nullable urlStr, NSError * _Nullable error) {
             if (error == nil) {
@@ -420,6 +417,7 @@ static MessageBlock messageCallback = nil;
                 // 获取页面高度，并重置 webview 的 frame
                 NSLog(@"html 的高度：%@", result);
             }];
+
 }
 
 /** 接收到重定向时会回调 */
@@ -586,7 +584,13 @@ static MessageBlock messageCallback = nil;
         {
             [self.wkProgressView setAlpha:1.0f];
             float progressValue = fabsf([change[@"new"] floatValue]);
-            [_wkProgressView setProgress:progressValue animated:YES];
+            if (progressValue > _wkProgressView.progress) {
+                
+                [_wkProgressView setProgress:progressValue animated:YES];
+            }else{
+                
+                [_wkProgressView setProgress:progressValue animated:NO];
+            }
             
             if(progressValue >= 1.0f)
             {

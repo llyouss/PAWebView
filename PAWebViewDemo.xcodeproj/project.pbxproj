@@ -15,27 +15,27 @@
 		EC2BD2FF2004B3DD00912D5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD2FE2004B3DD00912D5B /* main.m */; };
 		EC2BD3092004B3DD00912D5B /* PAWebViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3082004B3DD00912D5B /* PAWebViewDemoTests.m */; };
 		EC2BD3142004B3DE00912D5B /* PAWebViewDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3132004B3DE00912D5B /* PAWebViewDemoUITests.m */; };
-		EC2BD37B2006F79E00912D5B /* NSURL+PATool.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3592006F79E00912D5B /* NSURL+PATool.m */; };
-		EC2BD37C2006F79E00912D5B /* PAWebView+UIDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD35B2006F79E00912D5B /* PAWebView+UIDelegate.m */; };
-		EC2BD37D2006F79E00912D5B /* PAWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD35D2006F79E00912D5B /* PAWebView.m */; };
-		EC2BD37E2006F79E00912D5B /* NSObject+PARuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3602006F79E00912D5B /* NSObject+PARuntime.m */; };
-		EC2BD37F2006F79E00912D5B /* WKWebView+PAWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3622006F79E00912D5B /* WKWebView+PAWebCache.m */; };
-		EC2BD3802006F79E00912D5B /* WKWebView+PAWebCookie.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3642006F79E00912D5B /* WKWebView+PAWebCookie.m */; };
-		EC2BD3812006F79E00912D5B /* PAWebNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3672006F79E00912D5B /* PAWebNavigationController.m */; };
-		EC2BD3822006F79E00912D5B /* PAWKPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3692006F79E00912D5B /* PAWKPanGestureRecognizer.m */; };
-		EC2BD3832006F79E00912D5B /* navigationbar_more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2BD36B2006F79E00912D5B /* navigationbar_more@2x.png */; };
-		EC2BD3842006F79E00912D5B /* navigationbar_more@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2BD36C2006F79E00912D5B /* navigationbar_more@3x.png */; };
-		EC2BD3852006F79E00912D5B /* PAWebBack.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2BD36D2006F79E00912D5B /* PAWebBack.png */; };
-		EC2BD3862006F79E00912D5B /* UIAlertController+WKWebAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD36F2006F79E00912D5B /* UIAlertController+WKWebAlert.m */; };
-		EC2BD3872006F79E00912D5B /* WKBaseWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3712006F79E00912D5B /* WKBaseWebView.m */; };
-		EC2BD3882006F79E00912D5B /* registerURLSchemes.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3732006F79E00912D5B /* registerURLSchemes.m */; };
-		EC2BD3892006F79E00912D5B /* urlschemeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3752006F79E00912D5B /* urlschemeModel.m */; };
-		EC2BD38A2006F79E00912D5B /* WKJSFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3762006F79E00912D5B /* WKJSFunction.m */; };
-		EC2BD38B2006F79E00912D5B /* WKScanQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD3782006F79E00912D5B /* WKScanQRCode.m */; };
-		EC2BD38C2006F79E00912D5B /* WKWebView+POST.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BD37A2006F79E00912D5B /* WKWebView+POST.m */; };
 		EC2BD38F2007057600912D5B /* PAWebview.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2BD38E2007057600912D5B /* PAWebview.png */; };
 		ECE03D4E20299F640004093D /* iOS.html in Resources */ = {isa = PBXBuildFile; fileRef = ECE03D4D20299F640004093D /* iOS.html */; };
 		ECE03D502029A8CF0004093D /* main.html in Resources */ = {isa = PBXBuildFile; fileRef = ECE03D4F2029A8CE0004093D /* main.html */; };
+		ECE03DC9202ABD5A0004093D /* PAWebView+UIDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DA6202ABD5A0004093D /* PAWebView+UIDelegate.m */; };
+		ECE03DCA202ABD5A0004093D /* PAWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DA8202ABD5A0004093D /* PAWebView.m */; };
+		ECE03DCB202ABD5A0004093D /* NSObject+PARuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DAB202ABD5A0004093D /* NSObject+PARuntime.m */; };
+		ECE03DCC202ABD5A0004093D /* WKWebView+PAWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DAD202ABD5A0004093D /* WKWebView+PAWebCache.m */; };
+		ECE03DCD202ABD5A0004093D /* WKWebView+PAWebCookie.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DAF202ABD5A0004093D /* WKWebView+PAWebCookie.m */; };
+		ECE03DCE202ABD5A0004093D /* NSURL+PATool.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DB2202ABD5A0004093D /* NSURL+PATool.m */; };
+		ECE03DCF202ABD5A0004093D /* registerURLSchemes.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DB4202ABD5A0004093D /* registerURLSchemes.m */; };
+		ECE03DD0202ABD5A0004093D /* urlschemeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DB6202ABD5A0004093D /* urlschemeModel.m */; };
+		ECE03DD1202ABD5A0004093D /* WKWebView+LongPress.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DB8202ABD5A0004093D /* WKWebView+LongPress.m */; };
+		ECE03DD2202ABD5A0004093D /* WKWebView+POST.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DBA202ABD5A0004093D /* WKWebView+POST.m */; };
+		ECE03DD3202ABD5A0004093D /* PAWebNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DBD202ABD5A0004093D /* PAWebNavigationController.m */; };
+		ECE03DD4202ABD5A0004093D /* PAWKPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DBF202ABD5A0004093D /* PAWKPanGestureRecognizer.m */; };
+		ECE03DD5202ABD5A0004093D /* navigationbar_more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ECE03DC1202ABD5A0004093D /* navigationbar_more@2x.png */; };
+		ECE03DD6202ABD5A0004093D /* navigationbar_more@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = ECE03DC2202ABD5A0004093D /* navigationbar_more@3x.png */; };
+		ECE03DD7202ABD5A0004093D /* PAWebBack.png in Resources */ = {isa = PBXBuildFile; fileRef = ECE03DC3202ABD5A0004093D /* PAWebBack.png */; };
+		ECE03DD8202ABD5A0004093D /* UIAlertController+WKWebAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DC5202ABD5A0004093D /* UIAlertController+WKWebAlert.m */; };
+		ECE03DD9202ABD5A0004093D /* WKBaseWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DC7202ABD5A0004093D /* WKBaseWebView.m */; };
+		ECE03DDA202ABD5A0004093D /* WKJSFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE03DC8202ABD5A0004093D /* WKJSFunction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,41 +72,41 @@
 		EC2BD30F2004B3DE00912D5B /* PAWebViewDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PAWebViewDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC2BD3132004B3DE00912D5B /* PAWebViewDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAWebViewDemoUITests.m; sourceTree = "<group>"; };
 		EC2BD3152004B3DE00912D5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EC2BD3582006F79E00912D5B /* NSURL+PATool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+PATool.h"; sourceTree = "<group>"; };
-		EC2BD3592006F79E00912D5B /* NSURL+PATool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+PATool.m"; sourceTree = "<group>"; };
-		EC2BD35A2006F79E00912D5B /* PAWebView+UIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PAWebView+UIDelegate.h"; sourceTree = "<group>"; };
-		EC2BD35B2006F79E00912D5B /* PAWebView+UIDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PAWebView+UIDelegate.m"; sourceTree = "<group>"; };
-		EC2BD35C2006F79E00912D5B /* PAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAWebView.h; sourceTree = "<group>"; };
-		EC2BD35D2006F79E00912D5B /* PAWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAWebView.m; sourceTree = "<group>"; };
-		EC2BD35F2006F79E00912D5B /* NSObject+PARuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PARuntime.h"; sourceTree = "<group>"; };
-		EC2BD3602006F79E00912D5B /* NSObject+PARuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PARuntime.m"; sourceTree = "<group>"; };
-		EC2BD3612006F79E00912D5B /* WKWebView+PAWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+PAWebCache.h"; sourceTree = "<group>"; };
-		EC2BD3622006F79E00912D5B /* WKWebView+PAWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+PAWebCache.m"; sourceTree = "<group>"; };
-		EC2BD3632006F79E00912D5B /* WKWebView+PAWebCookie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+PAWebCookie.h"; sourceTree = "<group>"; };
-		EC2BD3642006F79E00912D5B /* WKWebView+PAWebCookie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+PAWebCookie.m"; sourceTree = "<group>"; };
-		EC2BD3662006F79E00912D5B /* PAWebNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAWebNavigationController.h; sourceTree = "<group>"; };
-		EC2BD3672006F79E00912D5B /* PAWebNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAWebNavigationController.m; sourceTree = "<group>"; };
-		EC2BD3682006F79E00912D5B /* PAWKPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAWKPanGestureRecognizer.h; sourceTree = "<group>"; };
-		EC2BD3692006F79E00912D5B /* PAWKPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAWKPanGestureRecognizer.m; sourceTree = "<group>"; };
-		EC2BD36B2006F79E00912D5B /* navigationbar_more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar_more@2x.png"; sourceTree = "<group>"; };
-		EC2BD36C2006F79E00912D5B /* navigationbar_more@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar_more@3x.png"; sourceTree = "<group>"; };
-		EC2BD36D2006F79E00912D5B /* PAWebBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PAWebBack.png; sourceTree = "<group>"; };
-		EC2BD36E2006F79E00912D5B /* UIAlertController+WKWebAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+WKWebAlert.h"; sourceTree = "<group>"; };
-		EC2BD36F2006F79E00912D5B /* UIAlertController+WKWebAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+WKWebAlert.m"; sourceTree = "<group>"; };
-		EC2BD3702006F79E00912D5B /* WKBaseWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKBaseWebView.h; sourceTree = "<group>"; };
-		EC2BD3712006F79E00912D5B /* WKBaseWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKBaseWebView.m; sourceTree = "<group>"; };
-		EC2BD3722006F79E00912D5B /* registerURLSchemes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registerURLSchemes.h; sourceTree = "<group>"; };
-		EC2BD3732006F79E00912D5B /* registerURLSchemes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = registerURLSchemes.m; sourceTree = "<group>"; };
-		EC2BD3742006F79E00912D5B /* urlschemeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = urlschemeModel.h; sourceTree = "<group>"; };
-		EC2BD3752006F79E00912D5B /* urlschemeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = urlschemeModel.m; sourceTree = "<group>"; };
-		EC2BD3762006F79E00912D5B /* WKJSFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKJSFunction.m; sourceTree = "<group>"; };
-		EC2BD3772006F79E00912D5B /* WKScanQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKScanQRCode.h; sourceTree = "<group>"; };
-		EC2BD3782006F79E00912D5B /* WKScanQRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKScanQRCode.m; sourceTree = "<group>"; };
-		EC2BD3792006F79E00912D5B /* WKWebView+POST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+POST.h"; sourceTree = "<group>"; };
-		EC2BD37A2006F79E00912D5B /* WKWebView+POST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+POST.m"; sourceTree = "<group>"; };
 		EC2BD38E2007057600912D5B /* PAWebview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PAWebview.png; sourceTree = "<group>"; };
 		ECE03D4D20299F640004093D /* iOS.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = iOS.html; sourceTree = "<group>"; };
 		ECE03D4F2029A8CE0004093D /* main.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = main.html; sourceTree = "<group>"; };
+		ECE03DA5202ABD5A0004093D /* PAWebView+UIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PAWebView+UIDelegate.h"; sourceTree = "<group>"; };
+		ECE03DA6202ABD5A0004093D /* PAWebView+UIDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PAWebView+UIDelegate.m"; sourceTree = "<group>"; };
+		ECE03DA7202ABD5A0004093D /* PAWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAWebView.h; sourceTree = "<group>"; };
+		ECE03DA8202ABD5A0004093D /* PAWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAWebView.m; sourceTree = "<group>"; };
+		ECE03DAA202ABD5A0004093D /* NSObject+PARuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PARuntime.h"; sourceTree = "<group>"; };
+		ECE03DAB202ABD5A0004093D /* NSObject+PARuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PARuntime.m"; sourceTree = "<group>"; };
+		ECE03DAC202ABD5A0004093D /* WKWebView+PAWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+PAWebCache.h"; sourceTree = "<group>"; };
+		ECE03DAD202ABD5A0004093D /* WKWebView+PAWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+PAWebCache.m"; sourceTree = "<group>"; };
+		ECE03DAE202ABD5A0004093D /* WKWebView+PAWebCookie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+PAWebCookie.h"; sourceTree = "<group>"; };
+		ECE03DAF202ABD5A0004093D /* WKWebView+PAWebCookie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+PAWebCookie.m"; sourceTree = "<group>"; };
+		ECE03DB1202ABD5A0004093D /* NSURL+PATool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+PATool.h"; sourceTree = "<group>"; };
+		ECE03DB2202ABD5A0004093D /* NSURL+PATool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+PATool.m"; sourceTree = "<group>"; };
+		ECE03DB3202ABD5A0004093D /* registerURLSchemes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registerURLSchemes.h; sourceTree = "<group>"; };
+		ECE03DB4202ABD5A0004093D /* registerURLSchemes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = registerURLSchemes.m; sourceTree = "<group>"; };
+		ECE03DB5202ABD5A0004093D /* urlschemeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = urlschemeModel.h; sourceTree = "<group>"; };
+		ECE03DB6202ABD5A0004093D /* urlschemeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = urlschemeModel.m; sourceTree = "<group>"; };
+		ECE03DB7202ABD5A0004093D /* WKWebView+LongPress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+LongPress.h"; sourceTree = "<group>"; };
+		ECE03DB8202ABD5A0004093D /* WKWebView+LongPress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+LongPress.m"; sourceTree = "<group>"; };
+		ECE03DB9202ABD5A0004093D /* WKWebView+POST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+POST.h"; sourceTree = "<group>"; };
+		ECE03DBA202ABD5A0004093D /* WKWebView+POST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+POST.m"; sourceTree = "<group>"; };
+		ECE03DBC202ABD5A0004093D /* PAWebNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAWebNavigationController.h; sourceTree = "<group>"; };
+		ECE03DBD202ABD5A0004093D /* PAWebNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAWebNavigationController.m; sourceTree = "<group>"; };
+		ECE03DBE202ABD5A0004093D /* PAWKPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAWKPanGestureRecognizer.h; sourceTree = "<group>"; };
+		ECE03DBF202ABD5A0004093D /* PAWKPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAWKPanGestureRecognizer.m; sourceTree = "<group>"; };
+		ECE03DC1202ABD5A0004093D /* navigationbar_more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar_more@2x.png"; sourceTree = "<group>"; };
+		ECE03DC2202ABD5A0004093D /* navigationbar_more@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar_more@3x.png"; sourceTree = "<group>"; };
+		ECE03DC3202ABD5A0004093D /* PAWebBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PAWebBack.png; sourceTree = "<group>"; };
+		ECE03DC4202ABD5A0004093D /* UIAlertController+WKWebAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+WKWebAlert.h"; sourceTree = "<group>"; };
+		ECE03DC5202ABD5A0004093D /* UIAlertController+WKWebAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+WKWebAlert.m"; sourceTree = "<group>"; };
+		ECE03DC6202ABD5A0004093D /* WKBaseWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKBaseWebView.h; sourceTree = "<group>"; };
+		ECE03DC7202ABD5A0004093D /* WKBaseWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKBaseWebView.m; sourceTree = "<group>"; };
+		ECE03DC8202ABD5A0004093D /* WKJSFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKJSFunction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,7 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				EC2BD38D2007052700912D5B /* Image */,
-				EC2BD3572006F79E00912D5B /* PAWebView */,
+				ECE03DA4202ABD5A0004093D /* PAWebView */,
 				EC2BD2EE2004B3DD00912D5B /* PAWebViewDemo */,
 				EC2BD3072004B3DD00912D5B /* PAWebViewDemoTests */,
 				EC2BD3122004B3DE00912D5B /* PAWebViewDemoUITests */,
@@ -192,75 +192,83 @@
 			path = PAWebViewDemoUITests;
 			sourceTree = "<group>";
 		};
-		EC2BD3572006F79E00912D5B /* PAWebView */ = {
-			isa = PBXGroup;
-			children = (
-				EC2BD3582006F79E00912D5B /* NSURL+PATool.h */,
-				EC2BD3592006F79E00912D5B /* NSURL+PATool.m */,
-				EC2BD35A2006F79E00912D5B /* PAWebView+UIDelegate.h */,
-				EC2BD35B2006F79E00912D5B /* PAWebView+UIDelegate.m */,
-				EC2BD35C2006F79E00912D5B /* PAWebView.h */,
-				EC2BD35D2006F79E00912D5B /* PAWebView.m */,
-				EC2BD35E2006F79E00912D5B /* PAWebViewCache */,
-				EC2BD3652006F79E00912D5B /* PAWKNative */,
-				EC2BD3722006F79E00912D5B /* registerURLSchemes.h */,
-				EC2BD3732006F79E00912D5B /* registerURLSchemes.m */,
-				EC2BD3742006F79E00912D5B /* urlschemeModel.h */,
-				EC2BD3752006F79E00912D5B /* urlschemeModel.m */,
-				EC2BD3762006F79E00912D5B /* WKJSFunction.m */,
-				EC2BD3772006F79E00912D5B /* WKScanQRCode.h */,
-				EC2BD3782006F79E00912D5B /* WKScanQRCode.m */,
-				EC2BD3792006F79E00912D5B /* WKWebView+POST.h */,
-				EC2BD37A2006F79E00912D5B /* WKWebView+POST.m */,
-			);
-			path = PAWebView;
-			sourceTree = "<group>";
-		};
-		EC2BD35E2006F79E00912D5B /* PAWebViewCache */ = {
-			isa = PBXGroup;
-			children = (
-				EC2BD35F2006F79E00912D5B /* NSObject+PARuntime.h */,
-				EC2BD3602006F79E00912D5B /* NSObject+PARuntime.m */,
-				EC2BD3612006F79E00912D5B /* WKWebView+PAWebCache.h */,
-				EC2BD3622006F79E00912D5B /* WKWebView+PAWebCache.m */,
-				EC2BD3632006F79E00912D5B /* WKWebView+PAWebCookie.h */,
-				EC2BD3642006F79E00912D5B /* WKWebView+PAWebCookie.m */,
-			);
-			path = PAWebViewCache;
-			sourceTree = "<group>";
-		};
-		EC2BD3652006F79E00912D5B /* PAWKNative */ = {
-			isa = PBXGroup;
-			children = (
-				EC2BD3662006F79E00912D5B /* PAWebNavigationController.h */,
-				EC2BD3672006F79E00912D5B /* PAWebNavigationController.m */,
-				EC2BD3682006F79E00912D5B /* PAWKPanGestureRecognizer.h */,
-				EC2BD3692006F79E00912D5B /* PAWKPanGestureRecognizer.m */,
-				EC2BD36A2006F79E00912D5B /* views */,
-				EC2BD3702006F79E00912D5B /* WKBaseWebView.h */,
-				EC2BD3712006F79E00912D5B /* WKBaseWebView.m */,
-			);
-			path = PAWKNative;
-			sourceTree = "<group>";
-		};
-		EC2BD36A2006F79E00912D5B /* views */ = {
-			isa = PBXGroup;
-			children = (
-				EC2BD36B2006F79E00912D5B /* navigationbar_more@2x.png */,
-				EC2BD36C2006F79E00912D5B /* navigationbar_more@3x.png */,
-				EC2BD36D2006F79E00912D5B /* PAWebBack.png */,
-				EC2BD36E2006F79E00912D5B /* UIAlertController+WKWebAlert.h */,
-				EC2BD36F2006F79E00912D5B /* UIAlertController+WKWebAlert.m */,
-			);
-			path = views;
-			sourceTree = "<group>";
-		};
 		EC2BD38D2007052700912D5B /* Image */ = {
 			isa = PBXGroup;
 			children = (
 				EC2BD38E2007057600912D5B /* PAWebview.png */,
 			);
 			path = Image;
+			sourceTree = "<group>";
+		};
+		ECE03DA4202ABD5A0004093D /* PAWebView */ = {
+			isa = PBXGroup;
+			children = (
+				ECE03DA5202ABD5A0004093D /* PAWebView+UIDelegate.h */,
+				ECE03DA6202ABD5A0004093D /* PAWebView+UIDelegate.m */,
+				ECE03DA7202ABD5A0004093D /* PAWebView.h */,
+				ECE03DA8202ABD5A0004093D /* PAWebView.m */,
+				ECE03DA9202ABD5A0004093D /* PAWebViewCache */,
+				ECE03DB0202ABD5A0004093D /* PAWebViewTool */,
+				ECE03DBB202ABD5A0004093D /* PAWKNative */,
+				ECE03DC8202ABD5A0004093D /* WKJSFunction.m */,
+			);
+			path = PAWebView;
+			sourceTree = "<group>";
+		};
+		ECE03DA9202ABD5A0004093D /* PAWebViewCache */ = {
+			isa = PBXGroup;
+			children = (
+				ECE03DAA202ABD5A0004093D /* NSObject+PARuntime.h */,
+				ECE03DAB202ABD5A0004093D /* NSObject+PARuntime.m */,
+				ECE03DAC202ABD5A0004093D /* WKWebView+PAWebCache.h */,
+				ECE03DAD202ABD5A0004093D /* WKWebView+PAWebCache.m */,
+				ECE03DAE202ABD5A0004093D /* WKWebView+PAWebCookie.h */,
+				ECE03DAF202ABD5A0004093D /* WKWebView+PAWebCookie.m */,
+			);
+			path = PAWebViewCache;
+			sourceTree = "<group>";
+		};
+		ECE03DB0202ABD5A0004093D /* PAWebViewTool */ = {
+			isa = PBXGroup;
+			children = (
+				ECE03DB1202ABD5A0004093D /* NSURL+PATool.h */,
+				ECE03DB2202ABD5A0004093D /* NSURL+PATool.m */,
+				ECE03DB3202ABD5A0004093D /* registerURLSchemes.h */,
+				ECE03DB4202ABD5A0004093D /* registerURLSchemes.m */,
+				ECE03DB5202ABD5A0004093D /* urlschemeModel.h */,
+				ECE03DB6202ABD5A0004093D /* urlschemeModel.m */,
+				ECE03DB7202ABD5A0004093D /* WKWebView+LongPress.h */,
+				ECE03DB8202ABD5A0004093D /* WKWebView+LongPress.m */,
+				ECE03DB9202ABD5A0004093D /* WKWebView+POST.h */,
+				ECE03DBA202ABD5A0004093D /* WKWebView+POST.m */,
+			);
+			path = PAWebViewTool;
+			sourceTree = "<group>";
+		};
+		ECE03DBB202ABD5A0004093D /* PAWKNative */ = {
+			isa = PBXGroup;
+			children = (
+				ECE03DBC202ABD5A0004093D /* PAWebNavigationController.h */,
+				ECE03DBD202ABD5A0004093D /* PAWebNavigationController.m */,
+				ECE03DBE202ABD5A0004093D /* PAWKPanGestureRecognizer.h */,
+				ECE03DBF202ABD5A0004093D /* PAWKPanGestureRecognizer.m */,
+				ECE03DC0202ABD5A0004093D /* views */,
+				ECE03DC6202ABD5A0004093D /* WKBaseWebView.h */,
+				ECE03DC7202ABD5A0004093D /* WKBaseWebView.m */,
+			);
+			path = PAWKNative;
+			sourceTree = "<group>";
+		};
+		ECE03DC0202ABD5A0004093D /* views */ = {
+			isa = PBXGroup;
+			children = (
+				ECE03DC1202ABD5A0004093D /* navigationbar_more@2x.png */,
+				ECE03DC2202ABD5A0004093D /* navigationbar_more@3x.png */,
+				ECE03DC3202ABD5A0004093D /* PAWebBack.png */,
+				ECE03DC4202ABD5A0004093D /* UIAlertController+WKWebAlert.h */,
+				ECE03DC5202ABD5A0004093D /* UIAlertController+WKWebAlert.m */,
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -371,13 +379,13 @@
 			files = (
 				ECE03D502029A8CF0004093D /* main.html in Resources */,
 				EC2BD2FC2004B3DD00912D5B /* LaunchScreen.storyboard in Resources */,
-				EC2BD3832006F79E00912D5B /* navigationbar_more@2x.png in Resources */,
-				EC2BD3852006F79E00912D5B /* PAWebBack.png in Resources */,
-				EC2BD3842006F79E00912D5B /* navigationbar_more@3x.png in Resources */,
 				EC2BD2F92004B3DD00912D5B /* Assets.xcassets in Resources */,
 				EC2BD38F2007057600912D5B /* PAWebview.png in Resources */,
 				ECE03D4E20299F640004093D /* iOS.html in Resources */,
 				EC2BD2F72004B3DD00912D5B /* Main.storyboard in Resources */,
+				ECE03DD6202ABD5A0004093D /* navigationbar_more@3x.png in Resources */,
+				ECE03DD5202ABD5A0004093D /* navigationbar_more@2x.png in Resources */,
+				ECE03DD7202ABD5A0004093D /* PAWebBack.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,24 +410,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC2BD38B2006F79E00912D5B /* WKScanQRCode.m in Sources */,
-				EC2BD3802006F79E00912D5B /* WKWebView+PAWebCookie.m in Sources */,
-				EC2BD3872006F79E00912D5B /* WKBaseWebView.m in Sources */,
-				EC2BD37E2006F79E00912D5B /* NSObject+PARuntime.m in Sources */,
-				EC2BD37D2006F79E00912D5B /* PAWebView.m in Sources */,
-				EC2BD37F2006F79E00912D5B /* WKWebView+PAWebCache.m in Sources */,
-				EC2BD3822006F79E00912D5B /* PAWKPanGestureRecognizer.m in Sources */,
-				EC2BD37C2006F79E00912D5B /* PAWebView+UIDelegate.m in Sources */,
-				EC2BD3882006F79E00912D5B /* registerURLSchemes.m in Sources */,
-				EC2BD38C2006F79E00912D5B /* WKWebView+POST.m in Sources */,
+				ECE03DCC202ABD5A0004093D /* WKWebView+PAWebCache.m in Sources */,
+				ECE03DCF202ABD5A0004093D /* registerURLSchemes.m in Sources */,
+				ECE03DD2202ABD5A0004093D /* WKWebView+POST.m in Sources */,
+				ECE03DCD202ABD5A0004093D /* WKWebView+PAWebCookie.m in Sources */,
+				ECE03DDA202ABD5A0004093D /* WKJSFunction.m in Sources */,
 				EC2BD2F42004B3DD00912D5B /* ViewController.m in Sources */,
+				ECE03DCB202ABD5A0004093D /* NSObject+PARuntime.m in Sources */,
+				ECE03DD8202ABD5A0004093D /* UIAlertController+WKWebAlert.m in Sources */,
+				ECE03DD9202ABD5A0004093D /* WKBaseWebView.m in Sources */,
+				ECE03DCA202ABD5A0004093D /* PAWebView.m in Sources */,
+				ECE03DD3202ABD5A0004093D /* PAWebNavigationController.m in Sources */,
 				EC2BD2FF2004B3DD00912D5B /* main.m in Sources */,
+				ECE03DD1202ABD5A0004093D /* WKWebView+LongPress.m in Sources */,
+				ECE03DD0202ABD5A0004093D /* urlschemeModel.m in Sources */,
+				ECE03DCE202ABD5A0004093D /* NSURL+PATool.m in Sources */,
+				ECE03DD4202ABD5A0004093D /* PAWKPanGestureRecognizer.m in Sources */,
 				EC2BD2F12004B3DD00912D5B /* AppDelegate.m in Sources */,
-				EC2BD37B2006F79E00912D5B /* NSURL+PATool.m in Sources */,
-				EC2BD3892006F79E00912D5B /* urlschemeModel.m in Sources */,
-				EC2BD3862006F79E00912D5B /* UIAlertController+WKWebAlert.m in Sources */,
-				EC2BD38A2006F79E00912D5B /* WKJSFunction.m in Sources */,
-				EC2BD3812006F79E00912D5B /* PAWebNavigationController.m in Sources */,
+				ECE03DC9202ABD5A0004093D /* PAWebView+UIDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

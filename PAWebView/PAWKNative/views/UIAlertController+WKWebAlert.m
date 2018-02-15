@@ -21,6 +21,19 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wstrict-prototypes"
 
++ (BOOL)isAlert{
+    
+    for (UIWindow* window in [UIApplication sharedApplication].windows) {
+        NSArray* subviews = window.subviews;
+        if ([subviews count] > 0)
+            if ([[subviews objectAtIndex:0] isKindOfClass:[UIAlertView class]]
+                || [[subviews objectAtIndex:0] isKindOfClass:[UIAlertController class]])
+                return YES;
+    }
+    return NO;
+}
+
+
 + (void)PAlertWithTitle:(NSString *)title message:(NSString *)message completion:(void (^)())completion
 {
     UIAlertController*  showSecreetDefault = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];

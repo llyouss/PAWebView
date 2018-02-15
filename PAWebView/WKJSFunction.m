@@ -13,16 +13,16 @@
 
 /** 获取链接的js方法 */
 NSString* const JSSearchHrefFromHtml =
-                   @"function JSSearchHref(x,y) {"
-                    "var e = document.elementFromPoint(x, y);"
-                    "while(e){"
-                    "if(e.href){"
-                    "return e.href;"
-                    "}"
-                    "e = e.parentElement;"
-                    "}"
-                    "return e.href;"
-                    "}";
+                   @"function JSSearchHref(x,y) {\
+                    var e = document.elementFromPoint(x, y);\
+                    while(e){\
+                    if(e.href){\
+                    return e.href;\
+                    }\
+                    e = e.parentElement;\
+                    }\
+                    return e.href;\
+                    }";
 
 /** 获取图片链接的js方法 */
 NSString* const JSSearchImageFromHtml =

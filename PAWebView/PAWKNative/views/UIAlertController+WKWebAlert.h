@@ -26,7 +26,7 @@ typedef void (^BAKit_AlertControllerTextFieldConfigurationActionBlock)(UITextFie
 
 @interface UIAlertController (WKWebAlert)
 
-
++ (BOOL)isAlert;
 /**
  *  返回当前类的所有成员变量数组
  *
