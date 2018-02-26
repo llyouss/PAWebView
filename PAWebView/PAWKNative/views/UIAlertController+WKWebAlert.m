@@ -38,7 +38,7 @@
 {
     UIAlertController*  showSecreetDefault = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *ActionTrue = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nullable action) {
-        completion?completion():NULL;
+        completion ? completion() : NULL;
     }];
     
     [showSecreetDefault addAction:ActionTrue];
@@ -58,10 +58,10 @@
 {
     UIAlertController*  showSecreetDefault = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *ActionOne = [UIAlertAction actionWithTitle:action1Title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        action1?action1():NULL;
+        action1 ? action1() : NULL;
     }];
     UIAlertAction *ActionTwo = [UIAlertAction actionWithTitle:action2Title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        action2?action2():NULL;
+        action2 ? action2() : NULL;
     }];
     [showSecreetDefault addAction:ActionOne];
     [showSecreetDefault addAction:ActionTwo];

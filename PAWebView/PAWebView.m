@@ -33,15 +33,16 @@ NSString *const Key_LoadQRCodeUrl = @"Key_LoadQRCodeUrl"; //二维码识别（�
 
 static BOOL isReload = NO;
 static BOOL isloadSuccess = NO;
-
 static MessageBlock messageCallback = nil;
 
 @interface PAWebView ()<WKScriptMessageHandler,WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate>
 
+@property (nonatomic,   weak) id<PAWKScriptMessageHandler> messageHandlerdelegate;
 @property (nonatomic, strong) WKWebViewConfiguration *config;
 @property (nonatomic, strong) UIActivityIndicatorView * activityIndicator;
 @property (nonatomic, strong) UIProgressView *wkProgressView;   //进度条
 @property (nonatomic, retain) NSArray *messageHandlerName;
+@property (nonatomic, assign) BOOL longpress;
 
 @end
 
@@ -53,6 +54,7 @@ static MessageBlock messageCallback = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         baseWebview = [[self alloc]init];
+        baseWebview.longpress = NO;
     });
     
     return baseWebview;
@@ -100,10 +102,10 @@ static MessageBlock messageCallback = nil;
         _webView.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
         _webView.scrollView.showsVerticalScrollIndicator = YES;
         _webView.scrollView.showsHorizontalScrollIndicator = NO;
-        
+    
         if (@available(iOS 11.0, *)) {
-            WKHTTPCookieStore *cookieStroe = _webView.configuration.websiteDataStore.httpCookieStore;
-            [_webView syncCookiesToWKHTTPCookieStore:cookieStroe];
+            WKHTTPCookieStore *cookieStore = _webView.configuration.websiteDataStore.httpCookieStore;
+            [_webView syncCookiesToWKHTTPCookieStore:cookieStore];
         }
        
         [_webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
@@ -111,8 +113,9 @@ static MessageBlock messageCallback = nil;
         //添加页面跳转通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRequestFromNotification:) name:NotiName_LoadRequest object:nil];
         //添加长按手势
-        [_webView  addGestureRecognizerObserverWebElements];
-//        [[WKScanQRCode shareInstance] addGestureRecognizerObserverWebElementsWithWebView:_webView];
+        [_webView  addGestureRecognizerObserverWebElements:^(BOOL longpress) {
+            _longpress = longpress;
+        }];
     }
 
     return _webView;
@@ -122,6 +125,7 @@ static MessageBlock messageCallback = nil;
 {
     [registerURLSchemes registerURLSchemes:URLSchemes];
 }
+
 #pragma mark -
 #pragma mark -   网络请求
 
@@ -158,7 +162,7 @@ static MessageBlock messageCallback = nil;
  */
 - (void)loadRequestURL:(NSURL *)url
 {
-    _webView = _webView?_webView:self.webView;
+    _webView = _webView ? _webView : self.webView;
     
     NSString *Domain = url.host;
     NSMutableURLRequest* request;
@@ -167,12 +171,11 @@ static MessageBlock messageCallback = nil;
     }else{
        request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:20.0f];
     }
-   
     if (@available(iOS 11.0, *)) {
        //iOS 11.0 使用WKHTTPCookieStore 代替
     }else{
         /** 插入cookies JS */
-        if (Domain)[self.config.userContentController addUserScript:[_webView addCookieWithDomain:Domain]];
+        if (Domain)[self.config.userContentController addUserScript:[_webView searchCookieForUserScriptWithDomain:Domain]];
         /** 插入cookies PHP */
         if (Domain)[request setValue:[_webView phpCookieStringWithDomain:Domain] forHTTPHeaderField:@"Cookie"];
     }
@@ -201,7 +204,6 @@ static MessageBlock messageCallback = nil;
  */
 -(void)loadRequestFromNotification:(NSNotification *)noti
 {
-    NSLog(@"noti.userInfo %@ ",noti.userInfo);
     NSString * urlStr = [NSString string];
     for (NSString * key in [noti userInfo]){
         if ([key isEqualToString:Key_LoadQRCodeUrl]) {
@@ -210,7 +212,7 @@ static MessageBlock messageCallback = nil;
     }
     NSLog(@"urlStr = %@ ",urlStr);
     
-    _qrcodeBlock?_qrcodeBlock(urlStr):NULL;
+    _qrcodeBlock ? _qrcodeBlock(urlStr) : NULL;
     
     NSURL * url = [NSURL URLWithString:urlStr];
     if ([urlStr containsString:@"http"] || [[UIApplication sharedApplication]canOpenURL:url]) {
@@ -232,6 +234,7 @@ static MessageBlock messageCallback = nil;
         _config = [[WKWebViewConfiguration alloc] init];
         _config.userContentController = [[WKUserContentController alloc] init];
         _config.allowsInlineMediaPlayback = YES;        // 允许在线播放
+        _config.allowsAirPlayForMediaPlayback = YES;  //允许视频播放
         _config.preferences = [[WKPreferences alloc] init];
         _config.preferences.minimumFontSize = 10;
         _config.preferences.javaScriptEnabled = YES; //是否支持 JavaScript
@@ -261,7 +264,7 @@ static MessageBlock messageCallback = nil;
     
     NSLog(@"call js:%@",jsMethod);
     [self evaluateJavaScript:jsMethod completionHandler:^(id _Nullable response, NSError * _Nullable error) {
-        handler?handler(response,error):NULL;
+        handler ? handler(response,error) : NULL;
     }];
 }
 
@@ -271,8 +274,8 @@ static MessageBlock messageCallback = nil;
  */
 - (void)addScriptMessageHandlerWithName:(NSArray<NSString *> *)nameArr
 {
+    if (_config.userContentController) return;
     /* removeScriptMessageHandlerForName 同时使用，否则内存泄漏 */
-    if (self.config.userContentController)return;
     for (NSString * objStr in nameArr) {
         [self.config.userContentController addScriptMessageHandler:self name:objStr];
     }
@@ -310,7 +313,7 @@ static MessageBlock messageCallback = nil;
     if (_messageHandlerdelegate && [_messageHandlerdelegate respondsToSelector:@selector(PAUserContentController:didReceiveScriptMessage:)]) {
         [_messageHandlerdelegate PAUserContentController:userContentController didReceiveScriptMessage:message];
     }
-    messageCallback?messageCallback(userContentController,message):NULL;
+    messageCallback ? messageCallback(userContentController,message) : NULL;
 }
 
 #pragma mark -
@@ -352,16 +355,21 @@ static MessageBlock messageCallback = nil;
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:
 (WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
+    
+    if (_longpress) {
+        _longpress = NO;
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
+    }
     NSString *scheme = navigationAction.request.URL.scheme.lowercaseString;
     if (![scheme containsString:@"http"] && ![scheme containsString:@"about"] && ![scheme containsString:@"file"]) {
         // 对于跨域，需要手动跳转， 用系统浏览器（Safari）打开
-        if ([navigationAction.request.URL.absoluteString.lowercaseString containsString:@"ituns.apple.com"] ||
-            [navigationAction.request.URL.absoluteString containsString:@"itms-appss"])
+        if ([navigationAction.request.URL.host.lowercaseString isEqualToString:@"ituns.apple.com"])
         {
             [UIAlertController PAlertWithTitle:@"提示" message:@"是否打开appstore？" action1Title:@"返回" action2Title:@"去下载" action1:^{
                 [webView goBack];
             } action2:^{
-                [NSURL openURL:navigationAction.request.URL];
+                [NSURL SafariOpenURL:navigationAction.request.URL];
             }];
             decisionHandler(WKNavigationActionPolicyCancel);
             return;
@@ -370,10 +378,10 @@ static MessageBlock messageCallback = nil;
         [NSURL openURL:navigationAction.request.URL];
         // 不允许web内跳转
         decisionHandler(WKNavigationActionPolicyCancel);
+        
     } else {
         
-        if ([navigationAction.request.URL.absoluteString.lowercaseString containsString:@"itunes.apple"] ||
-            [navigationAction.request.URL.absoluteString.lowercaseString containsString:@"itms-appss"])
+        if ([navigationAction.request.URL.host.lowercaseString isEqualToString:@"itunes.apple.com"])
         {
             [NSURL openURL:navigationAction.request.URL];
             decisionHandler(WKNavigationActionPolicyCancel);
@@ -384,19 +392,22 @@ static MessageBlock messageCallback = nil;
     }
 }
 
-
-/** 存储cookies */
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
 {
-    dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-        NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
-        NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
+    if (@available(iOS 11.0, *)) {
+        //浏览器自动存储cookie
+    }else
+    {
         //存储cookies
-        for (NSHTTPCookie *cookie in cookies) {
-            [_webView insertCookie:cookie];
-        }
-    });
-    
+        dispatch_sync(dispatch_get_global_queue(0, 0), ^{
+            NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+            NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
+            //存储cookies
+            for (NSHTTPCookie *cookie in cookies) {
+                [_webView insertCookie:cookie];
+            }
+        });
+    }
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
@@ -412,11 +423,11 @@ static MessageBlock messageCallback = nil;
         }];
         
         NSString *heightString4 = @"document.body.scrollHeight";
-            // webView 高度自适应
-            [webView evaluateJavaScript:heightString4 completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-                // 获取页面高度，并重置 webview 的 frame
-                NSLog(@"html 的高度：%@", result);
-            }];
+        // webView 高度自适应
+        [webView evaluateJavaScript:heightString4 completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+            // 获取页面高度，并重置 webview 的 frame
+            NSLog(@"html 的高度：%@", result);
+        }];
 
 }
 
@@ -474,7 +485,7 @@ static MessageBlock messageCallback = nil;
 }
 
 - (void)goForward{
-    [self.webView canGoForward]?[_webView goForward]:NULL;
+    [self.webView canGoForward] ? [_webView goForward] : NULL;
 }
 
 /** 功能菜单按钮 */
@@ -577,7 +588,6 @@ static MessageBlock messageCallback = nil;
 /** 监控html的title 和 进度 */
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
-    NSLog(@"%@",keyPath);
     if ([keyPath isEqualToString:@"estimatedProgress"])
     {
         if (object == _webView)

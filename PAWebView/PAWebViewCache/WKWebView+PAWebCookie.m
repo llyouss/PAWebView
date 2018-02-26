@@ -12,22 +12,26 @@ static NSString* const PAWKCookiesKey = @"org.skyfox.PAWKShareInstanceCookies";
 
 @implementation WKWebView (PAWebCookie)
 
-- (void)syncCookiesToWKHTTPCookieStore:(WKHTTPCookieStore *)cookieStroe
+- (void)syncCookiesToWKHTTPCookieStore:(WKHTTPCookieStore *)cookieStore API_AVAILABLE(macosx(10.13), ios(11.0))
 {
     NSMutableArray *cookieArr = [self sharedHTTPCookieStorage];
     if (cookieArr.count == 0)return;
     for (NSHTTPCookie *cookie in cookieArr) {
-        [cookieStroe setCookie:cookie completionHandler:nil];
+        [cookieStore setCookie:cookie completionHandler:nil];
     }
 }
 
 - (void)insertCookie:(NSHTTPCookie *)cookie
 {
-    if (!cookie.expiresDate) {
-        return;
-    }
     
     @autoreleasepool {
+        
+        if (@available(iOS 11.0, *)) {
+            WKHTTPCookieStore *cookieStore = self.configuration.websiteDataStore.httpCookieStore;
+            [cookieStore setCookie:cookie completionHandler:nil];
+            return;
+        }
+        
         NSMutableArray *TempCookies = [NSMutableArray array];
         NSMutableArray *localCookies =[NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey: PAWKCookiesKey]];
         for (int i = 0; i < localCookies.count; i++) {
@@ -55,6 +59,7 @@ static NSString* const PAWKCookiesKey = @"org.skyfox.PAWKShareInstanceCookies";
         for (NSHTTPCookie *cookie in shareCookie.cookies){
             [cookiesArr addObject:cookie];
         }
+        
         /** 获取自定义存储的cookies */
         NSMutableArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey: PAWKCookiesKey]];
         
@@ -62,8 +67,8 @@ static NSString* const PAWKCookiesKey = @"org.skyfox.PAWKShareInstanceCookies";
         for (int i = 0; i < cookies.count; i++) {
             NSHTTPCookie *cookie = [cookies objectAtIndex:i];
             if (!cookie.expiresDate) {
-                [cookies removeObject:cookie];
-                i--;
+//                [cookies removeObject:cookie];
+//                i--;
                 continue;
             }
             if ([cookie.expiresDate compare:self.currentTime]) {
@@ -85,6 +90,13 @@ static NSString* const PAWKCookiesKey = @"org.skyfox.PAWKShareInstanceCookies";
 
 - (void)deleteAllWKCookies
 {
+    if (@available(iOS 11.0, *)) {
+        NSSet *websiteDataTypes = [NSSet setWithObject:WKWebsiteDataTypeCookies];
+        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+        [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
+        }];
+    }
+    
     NSData *cookiesData = [NSKeyedArchiver archivedDataWithRootObject: @[]];
     [[NSUserDefaults standardUserDefaults] setObject:cookiesData forKey:PAWKCookiesKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -92,6 +104,11 @@ static NSString* const PAWKCookiesKey = @"org.skyfox.PAWKShareInstanceCookies";
 
 - (void)deleteWKCookies:(NSHTTPCookie *)cookie
 {
+    if (@available(iOS 11.0, *)) {
+        WKHTTPCookieStore *cookieStore = self.configuration.websiteDataStore.httpCookieStore;
+        [cookieStore deleteCookie:cookie completionHandler:nil];
+        return;
+    }
     NSMutableArray *localCookies =[NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey: PAWKCookiesKey]];
     for (int i = 0; i < localCookies.count; i++) {
         NSHTTPCookie *TempCookie = [localCookies objectAtIndex:i];
@@ -108,7 +125,7 @@ static NSString* const PAWKCookiesKey = @"org.skyfox.PAWKShareInstanceCookies";
 
 
 /** js获取domain的cookie */
-- (NSString *)jsCookieStringWithDomain:(NSString *)domain
+- (NSString *)jsCookieStringWithDomain:(NSString *)domain 
 {
     @autoreleasepool {
         NSMutableString *cookieSting = [NSMutableString string];
@@ -122,7 +139,7 @@ static NSString* const PAWKCookiesKey = @"org.skyfox.PAWKShareInstanceCookies";
     }
 }
 
-- (WKUserScript *)addCookieWithDomain:(NSString *)domain
+- (WKUserScript *)searchCookieForUserScriptWithDomain:(NSString *)domain
 {
     NSString *cookie = [self jsCookieStringWithDomain:domain];
     WKUserScript * cookieScript = [[WKUserScript alloc] initWithSource: cookie injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];

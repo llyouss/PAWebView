@@ -25,8 +25,6 @@ typedef void (^QRCodeInfoBlock)(NSString *info);
 
 @interface PAWebView : WKBaseWebView
 
-@property (nonatomic,   weak) id<PAWKScriptMessageHandler> messageHandlerdelegate;
-
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, assign) BOOL openCache;   //缓存
 @property (nonatomic,   copy) NSString *currentURLString;  //当前页面的URL
@@ -72,12 +70,14 @@ typedef void (^QRCodeInfoBlock)(NSString *info);
 
 /** 读取本地磁盘的cookies，包括WKWebview的cookies和sharedHTTPCookieStorage存储的cookies */
 - (NSMutableArray *)WKSharedHTTPCookieStorage;
+
+/** 提供cookies插入，用于loadRequest 网页之前*/
 - (void)setcookie:(NSHTTPCookie *)cookie;
 
 /** 清除所有的cookies */
 - (void)deleteAllWKCookies;
 
-/** 清除所有缓存 */
+/** 清除所有缓存（cookie除外） */
 - (void)deleteAllWebCache;
 
 /**

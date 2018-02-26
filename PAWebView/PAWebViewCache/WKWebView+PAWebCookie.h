@@ -26,11 +26,11 @@
 - (void)deleteWKCookies:(NSHTTPCookie *)cookie;
 
 /** js获取domain的cookie */
-- (NSString *)jsCookieStringWithDomain:(NSString *)domain;
-- (WKUserScript *)addCookieWithDomain:(NSString *)domain;
+- (NSString *)jsCookieStringWithDomain:(NSString *)domain NS_DEPRECATED_IOS(8_0, 11_0);
+- (WKUserScript *)searchCookieForUserScriptWithDomain:(NSString *)domain  NS_DEPRECATED_IOS(8_0, 11_0);
 
 /** PHP 获取domain的cookie */
-- (NSString *)phpCookieStringWithDomain:(NSString *)domain;
+- (NSString *)phpCookieStringWithDomain:(NSString *)domain NS_DEPRECATED_IOS(8_0, 11_0);
 
 
 @end
