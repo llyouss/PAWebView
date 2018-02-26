@@ -11,6 +11,7 @@ For a complete example on how to use PAWeView, see the Sample Project.
 ## Usage
 - #import "PAWebView.h"  
 - plist
+  ```
    <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
    <key>UIStatusBarStyle</key>
@@ -22,7 +23,7 @@ For a complete example on how to use PAWeView, see the Sample Project.
     <key>NSAllowsArbitraryLoads</key>
     <true/>
    </dict>
- 
+  ```
 - Loading 
   ```
   //初始化单例  
