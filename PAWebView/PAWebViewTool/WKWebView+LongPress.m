@@ -259,6 +259,7 @@ CGPoint touchPoint;
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action)
                                  {
+                                     longPress ? longPress(NO) : NULL;
                                      //返回二维码信息
                                      [[NSNotificationCenter defaultCenter] postNotificationName:NotiName_LoadRequest object:nil userInfo:@{Key_LoadQRCodeUrl:url.absoluteString}];
                                  }];

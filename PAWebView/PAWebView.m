@@ -364,7 +364,7 @@ static MessageBlock messageCallback = nil;
     NSString *scheme = navigationAction.request.URL.scheme.lowercaseString;
     if (![scheme containsString:@"http"] && ![scheme containsString:@"about"] && ![scheme containsString:@"file"]) {
         // 对于跨域，需要手动跳转， 用系统浏览器（Safari）打开
-        if ([navigationAction.request.URL.host.lowercaseString isEqualToString:@"ituns.apple.com"])
+        if ([navigationAction.request.URL.host.lowercaseString isEqualToString:@"itunes.apple.com"])
         {
             [UIAlertController PAlertWithTitle:@"提示" message:@"是否打开appstore？" action1Title:@"返回" action2Title:@"去下载" action1:^{
                 [webView goBack];

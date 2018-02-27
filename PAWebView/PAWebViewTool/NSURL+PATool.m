@@ -52,8 +52,10 @@
 
 + (void)openURL:(NSURL *)URL
 {
-    if ([URL.host.lowercaseString isEqualToString:@"ituns.apple.com"] ||
+    NSLog(@"%@",URL.host.lowercaseString);
+    if ([URL.host.lowercaseString isEqualToString:@"itunes.apple.com"] ||
         [URL.host.lowercaseString isEqualToString:@"itunesconnect.apple.com"]) {
+        
         [UIAlertController PAlertWithTitle:[NSString stringWithFormat:@"即将打开Appstore下载应用"] message:@"如果不是本人操作，请取消" action1Title:@"取消" action2Title:@"打开" action1:^{
             return;
         } action2:^{
