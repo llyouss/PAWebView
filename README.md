@@ -10,6 +10,20 @@ For a complete example on how to use PAWeView, see the Sample Project.
  - Deployment: iOS 8.0
 ## Usage
 - #import "PAWebView.h"  
+- plist
+  ```
+   <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+   <key>UIStatusBarStyle</key>
+   <string>UIStatusBarStyleDefault</string>
+   <key>NSPhotoLibraryUsageDescription</key>
+   <string>访问相册</string>
+   <key>NSAppTransportSecurity</key>
+   <dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+   </dict>
+  ```
 - Loading 
   ```
   //初始化单例  
