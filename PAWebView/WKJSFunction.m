@@ -60,7 +60,7 @@ NSString* const JSSearchAllImageFromHtml =
                    @"function JSSearchAllImage(){"
                         "var img = [];"
                         "for(var i=0;i<$(\"img\").length;i++){"
-                            "if(parseInt($(\"img\").eq(i).css(\"width\"))>60){ "//获取所有符合放大要求的图片，将图片路径(src)获取
+                            "if(parseInt($(\"img\").eq(i).css(\"width\"))> 60){ "//获取所有符合放大要求的图片，将图片路径(src)获取
                                " img[i] = $(\"img\").eq(i).attr(\"src\");"
                            " }"
                         "}"

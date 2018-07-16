@@ -13,6 +13,9 @@
 @property (nonatomic, strong) UIBarButtonItem *backItem;   //返回按钮
 @property (nonatomic, strong) UIBarButtonItem *closeItem;  //关闭按钮
 
+/* 实现单例网页从此初始位置退出 */
+@property (nonatomic, assign) NSInteger previousIndex;
+
 @end
 
 

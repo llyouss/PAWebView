@@ -9,6 +9,8 @@
 #import "WKWebView+LongPress.h"
 #import <Photos/Photos.h>
 #import "UIAlertController+WKWebAlert.h"
+#import "PAPhotoBrowser.h"
+#import <objc/message.h>
 
 FOUNDATION_EXPORT NSString* const NotiName_LoadRequest;
 FOUNDATION_EXPORT NSString* const Key_LoadQRCodeUrl;
@@ -125,8 +127,51 @@ CGPoint touchPoint;
      {
          NSArray *imageArray = [self sortImageFromArray:image];
          NSLog(@"%@",imageArray);
+         
+         
+#pragma clang diagnostic push
+#pragma clang diagnostic  ignored "-Wundeclared-selector"
+         
+         Class cls = NSClassFromString(@"PAPhotoBrowser");
+         
+         id photos;
+         SEL fun = NSSelectorFromString(@"shareInstance");
+         if ([cls respondsToSelector:fun]) {
+            photos = [cls performSelector:fun];
+         }else{
+             NSLog(@"请使用PAPhotoBrowser扩展！");
+             return ;
+         }
+         
+         [photos setValue:imageArray forKey:@"photos"];
+         
+         NSInteger index =  [imageArray indexOfObject:ImageUrlString];
+         if (index == NSNotFound){
+             
+             NSMutableArray *array = [photos objectForKey:@"photos"];
+             [array insertObject:ImageUrlString atIndex:0];
+             
+             ((void (*)(id, SEL, NSInteger))
+              objc_msgSend)(photos,
+                            @selector(loadPhotoBrowserShowIndex:),
+                            0
+                            );
+             
+         }
+         else {
+             ((void (*)(id, SEL, NSInteger))
+              objc_msgSend)(photos,
+                            @selector(loadPhotoBrowserShowIndex:),
+                            index
+                           );
+         }
+         
+#pragma clang diagnostic pop
+         
+
      }];
 }
+
 
 /** 过滤从网页中抓取的图片 */
 - (NSArray *)sortImageFromArray:(NSArray *)array
@@ -134,6 +179,7 @@ CGPoint touchPoint;
     NSMutableArray *imageArray = [NSMutableArray array];
     for (NSString *urlString in array) {
         
+        if (!urlString || [urlString isEqual:[NSNull null]] || [urlString isKindOfClass:[NSNull class]] ) continue ;
         NSString *lowString = urlString.lowercaseString;
         if ([lowString hasPrefix:@"http"]
             &&([lowString.lowercaseString containsString:@".jpg"] ||
@@ -185,7 +231,6 @@ CGPoint touchPoint;
      }];
 }
 
-
 #pragma mark -
 
 #pragma mark - 检测获取的网页元素
@@ -226,7 +271,6 @@ CGPoint touchPoint;
      }];
 }
 
-
 /** 弹出检测出来的信息 */
 - (void)showActionWithImage:(NSString *)imageUrl href:(NSString *)href title:(NSString *)title type:(NSString *)t
 {
@@ -264,13 +308,13 @@ CGPoint touchPoint;
                                      [[NSNotificationCenter defaultCenter] postNotificationName:NotiName_LoadRequest object:nil userInfo:@{Key_LoadQRCodeUrl:url.absoluteString}];
                                  }];
     
-    /**
+    
     //看图模式
     UIAlertAction *ActionIntoImageMode = [UIAlertAction actionWithTitle:@"进入看图模式" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         longPress ? longPress(NO) : NULL;
         [self showAllImageFromHtmIndex:imgUrlString];
     }];
-     */
+     
     
     //下载图片
     UIAlertAction *ActionloadImage = [UIAlertAction actionWithTitle:@"保存图片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -321,6 +365,7 @@ CGPoint touchPoint;
         [imgUrlString.lowercaseString hasSuffix:@"png"] ||
         [imgUrlString.lowercaseString hasSuffix:@"gif"])
     {
+        [showActionTip addAction:ActionIntoImageMode];
         [showActionTip addAction:ActionloadImage];
         [showActionTip addAction:ActionShareImage];
         if (url) {
@@ -386,11 +431,11 @@ CGPoint touchPoint;
         [UIAlertController PAlertWithTitle:@"提示" message:@"下载失败" completion:nil];
         return;
     }
-    [self SaveImageFinished:image];
+    [self saveImageFinished:image];
 }
 
 /** 保存图片到相册 */
-- (void)SaveImageFinished:(UIImage *)image
+- (void)saveImageFinished:(UIImage *)image
 {
     if (!image) {
         [UIAlertController PAlertWithTitle:@"提示" message:@"下载失败" completion:nil];

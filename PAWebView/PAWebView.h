@@ -15,29 +15,31 @@
 
 @optional
 
-/** JS 调用OC */
+/** JS 调用OC回调 */
 - (void)PAUserContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message;
 
 @end
 
-typedef void (^MessageBlock)(WKUserContentController *userContentController,WKScriptMessage *message);
 typedef void (^QRCodeInfoBlock)(NSString *info);
+typedef void (^MessageBlock)(WKUserContentController *userContentController,WKScriptMessage *message);
+typedef void (^MenuBlock)(UIAlertController *  alertController, UIAlertAction *  action, NSInteger buttonIndex);
 
 @interface PAWebView : WKBaseWebView
 
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, assign) BOOL openCache;   //缓存
+@property (nonatomic, assign) BOOL showLog;     //执行日志
 @property (nonatomic,   copy) NSString *currentURLString;  //当前页面的URL
 @property (nonatomic,   copy) QRCodeInfoBlock qrcodeBlock;
 
-@property (nonatomic, strong) UIColor *paprogressTintColor;  //进度条颜色
-@property (nonatomic, strong) UIColor *paprogressTrackTintColor;
+@property (nonatomic, retain) UIColor *paprogressTintColor;  //进度条颜色
+@property (nonatomic, retain) UIColor *paprogressTrackTintColor;
 
 + (instancetype)shareInstance;
 
-/** 加载网页 加载网页时注入 cookies */
-- (void)loadRequestURL:(NSURL *)url;
-- (void)loadRequestURL:(NSURL *)url params:(NSDictionary*)params;
+/** 加载网页 加载网页时注入 cookies 把链接更改为 NSMutableURLRequest ，用户自定义缓存的方式和其他的一些具体的设置*/
+- (void)loadRequestURL:(NSMutableURLRequest *)request;
+- (void)loadRequestURL:(NSMutableURLRequest *)request params:(NSDictionary*)params;
 - (void)loadLocalHTMLWithFileName:(NSString *)htmlName;
 
 /** 重新加载webview */
@@ -51,7 +53,15 @@ typedef void (^QRCodeInfoBlock)(NSString *info);
 - (void)goForward;
 
 /**
- *  接收QRCOde 的内容通知作相关处理
+ 添加自定义的菜单栏
+
+ @param buttonTitle 菜单按钮的标题
+ @param block 反馈点击信息
+ */
+- (void)addMenuWithButtonTitle:(NSArray<NSString *> *)buttonTitle block:(MenuBlock)block;
+
+/**
+ *  接收QRCode 的内容通知作相关处理
  *  @param block QRCode的内容(包括手势长按或扫码)
  */
 - (void)notificationInfoFromQRCode:(QRCodeInfoBlock)block;
@@ -68,17 +78,34 @@ typedef void (^QRCodeInfoBlock)(NSString *info);
 - (void)callJS:(NSString *)jsMethod;
 - (void)callJS:(NSString *)jsMethod handler:(void (^)(id response, NSError *error))handler;
 
-/** 读取本地磁盘的cookies，包括WKWebview的cookies和sharedHTTPCookieStorage存储的cookies */
+/*清除backForwardList 列表*/
+- (void)clearBackForwardList;
+/**
+  读取本地磁盘的cookies，包括WKWebview的cookies和sharedHTTPCookieStorage存储的cookies
+
+ @return 返回包含所有的cookies的数组；
+ 当系统低于 iOS11 时，cookies 将同步NSHTTPCookieStorage的cookies，当系统大于iOS11时，cookies 将同步
+ */
 - (NSMutableArray *)WKSharedHTTPCookieStorage;
 
-/** 提供cookies插入，用于loadRequest 网页之前*/
-- (void)setcookie:(NSHTTPCookie *)cookie;
+/**
+  提供cookies插入，用于loadRequest 网页之前
+
+ @param cookie NSHTTPCookie 类型
+  cookie 需要设置 cookie 的name，value，domain，expiresDate（过期时间，当不设置过期时间，cookie将不会自动清除）；
+  cookie 设置expiresDate时使用 [cookieProperties setObject:expiresDate forKey:NSHTTPCookieExpires];将不起作用，原因不明；使用 cookieProperties[expiresDate] = expiresDate; 设置cookies 设置时间。
+ */
+- (void)setCookie:(NSHTTPCookie *)cookie;
+
+/** 删除某一个cookies 当cookie 的 */
+- (void)deleteWKCookie:(NSHTTPCookie *)cookie completionHandler:(nullable void (^)(void))completionHandler;
+- (void)deleteWKCookiesByHost:(NSURL *)host completionHandler:(nullable void (^)(void))completionHandler;
 
 /** 清除所有的cookies */
-- (void)deleteAllWKCookies;
+- (void)clearWKCookies;
 
 /** 清除所有缓存（cookie除外） */
-- (void)deleteAllWebCache;
+- (void)clearWebCacheFinish:(void(^)(BOOL finish,NSError *error))block;
 
 /**
  存储URLSchemes主要用于识别urlschemes的来源名字和appstore的下载链接。系统默认输入一部分url，如需额外自定义添加或覆盖，请到registerURLSchemes查看样板

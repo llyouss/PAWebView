@@ -10,6 +10,8 @@
 #import "PAWKPanGestureRecognizer.h"
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
+#import <WebKit/WebKit.h>
+
 @interface WKBaseWebView ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, retain) PAWKPanGestureRecognizer *pan;
@@ -44,6 +46,11 @@
     [super viewWillDisappear:animated];
 }
 
+- (void)popToBackForwardListItem:(WKBackForwardListItem *)item WebView:(WKWebView *)webview{
+    
+    [webview goToBackForwardListItem:item];
+}
+
 #pragma mark -- navigation/NaviBarItem setting-------
 /** 状态栏样式 */
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -56,11 +63,8 @@
     return UIStatusBarStyleLightContent;
 }
 
-
 #pragma NaviBarItem setting------
 #pragma mark - 添加关闭按钮
-
-
 
 #pragma mark - init
 - (UIBarButtonItem *)backItem
@@ -89,9 +93,10 @@
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     if (self.childViewControllers.count == 1) { //当只有一个自控制器时不可滑动
+
         return NO;
     }
-    
+
     return YES;
 }
 

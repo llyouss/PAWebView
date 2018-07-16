@@ -20,17 +20,18 @@
 - (NSMutableArray *)sharedHTTPCookieStorage;
 
 /** 删除所有的cookies */
-- (void)deleteAllWKCookies;
+- (void)clearWKCookies;
 
 /** 删除某一个cookies */
-- (void)deleteWKCookies:(NSHTTPCookie *)cookie;
+- (void)deleteWKCookie:(NSHTTPCookie *)cookie completionHandler:(nullable void (^)(void))completionHandler;
+- (void)deleteWKCookiesByHost:(NSURL *)host completionHandler:(nullable void (^)(void))completionHandler;
 
 /** js获取domain的cookie */
-- (NSString *)jsCookieStringWithDomain:(NSString *)domain NS_DEPRECATED_IOS(8_0, 11_0);
-- (WKUserScript *)searchCookieForUserScriptWithDomain:(NSString *)domain  NS_DEPRECATED_IOS(8_0, 11_0);
+- (NSString *)jsCookieStringWithDomain:(NSString *)domain;
+- (WKUserScript *)searchCookieForUserScriptWithDomain:(NSString *)domain;
 
 /** PHP 获取domain的cookie */
-- (NSString *)phpCookieStringWithDomain:(NSString *)domain NS_DEPRECATED_IOS(8_0, 11_0);
+- (NSString *)phpCookieStringWithDomain:(NSString *)domain;
 
 
 @end

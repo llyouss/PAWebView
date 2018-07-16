@@ -13,9 +13,10 @@
 #import "WKWebView+LongPress.h"
 
 #import "NSURL+PATool.h"
-#import "UIAlertController+WKWebAlert.h"
 #import "PAWebView+UIDelegate.h"
 #import "registerURLSchemes.h"
+#import "PAWebViewMenu.h"
+#import "TYSnapshot.h"
 
 //原生组件高度
 #define WKSTATUS_BAR_HEIGHT 0
@@ -37,12 +38,18 @@ static MessageBlock messageCallback = nil;
 
 @interface PAWebView ()<WKScriptMessageHandler,WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate>
 
+@property (nonatomic, retain) PAWebViewMenu *menu;
+@property (nonatomic,   copy) MenuBlock menuBlock;
+@property (nonatomic, retain) NSArray<NSString *> *buttonTitle;
 @property (nonatomic,   weak) id<PAWKScriptMessageHandler> messageHandlerdelegate;
 @property (nonatomic, strong) WKWebViewConfiguration *config;
 @property (nonatomic, strong) UIActivityIndicatorView * activityIndicator;
 @property (nonatomic, strong) UIProgressView *wkProgressView;   //进度条
 @property (nonatomic, retain) NSArray *messageHandlerName;
 @property (nonatomic, assign) BOOL longpress;
+
+//@property (nonatomic, strong) WBWebViewJSBridge * JSBridge;
+//@property (nonatomic, strong) WBWebViewConsole * console;
 
 @end
 
@@ -56,14 +63,17 @@ static MessageBlock messageCallback = nil;
         baseWebview = [[self alloc]init];
         baseWebview.longpress = NO;
     });
-    
+
     return baseWebview;
 }
 
 - (instancetype)init
 {
     if (self = [super init]) {
-        
+        self.menu = [PAWebViewMenu shareInstance];
+        self.menu.defaultType = YES;
+        self.openCache = YES;
+        [self webView];  //初始化，提前加载。
     }
     return self;
 }
@@ -79,6 +89,11 @@ static MessageBlock messageCallback = nil;
     });
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+}
+
 #pragma mark -
 #pragma mark webView实例
 
@@ -92,7 +107,7 @@ static MessageBlock messageCallback = nil;
         }
         
         _webView.backgroundColor = [UIColor whiteColor];
-        _webView.UIDelegate =self;
+        _webView.UIDelegate = self;
         _webView.scrollView.delegate = self;
         _webView.navigationDelegate = self;
         _webView.scrollView.bounces = YES;
@@ -121,6 +136,15 @@ static MessageBlock messageCallback = nil;
     return _webView;
 }
 
+- (void)clearBackForwardList{
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wsarc-performSelector-leaks"
+    [self.webView.backForwardList performSelector:NSSelectorFromString(@"_removeAllItems")];
+#pragma clang diagnostic pop
+    
+}
+
 - (void)registerURLSchemes:(NSDictionary *)URLSchemes
 {
     [registerURLSchemes registerURLSchemes:URLSchemes];
@@ -147,38 +171,31 @@ static MessageBlock messageCallback = nil;
 
 /**
  *  请求网络资源 post
- *  @param url      网络地址
+ *  @param request  请求的具体地址和设置
  *  @param params   参数
  */
-- (void)loadRequestURL:(NSURL *)url params:(NSDictionary*)params
+- (void)loadRequestURL:(NSMutableURLRequest *)request params:(NSDictionary*)params
 {
-    NSURL *URLString = [NSURL generateURL:url.absoluteString params:params];
-    [self loadRequestURL:URLString];
+    NSURL *URLString = [NSURL generateURL:request.URL.absoluteString params:params];
+    request.URL = URLString;
+    [self loadRequestURL:request];
 }
 
 /**
  *  请求网络资源
- *  @param  url 网络地址
+ *  @param  request 请求的具体地址和设置
  */
-- (void)loadRequestURL:(NSURL *)url
+- (void)loadRequestURL:(NSMutableURLRequest *)request
 {
     _webView = _webView ? _webView : self.webView;
+    NSString *Domain = request.URL.host;
+
+    /** 插入cookies JS */
+    if (Domain)[self.config.userContentController addUserScript:[_webView searchCookieForUserScriptWithDomain:Domain]];
+    /** 插入cookies PHP */
+    if (Domain)[request setValue:[_webView phpCookieStringWithDomain:Domain] forHTTPHeaderField:@"Cookie"];
     
-    NSString *Domain = url.host;
-    NSMutableURLRequest* request;
-    if (self.openCache) {
-       request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:20.0f];
-    }else{
-       request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:20.0f];
-    }
-    if (@available(iOS 11.0, *)) {
-       //iOS 11.0 使用WKHTTPCookieStore 代替
-    }else{
-        /** 插入cookies JS */
-        if (Domain)[self.config.userContentController addUserScript:[_webView searchCookieForUserScriptWithDomain:Domain]];
-        /** 插入cookies PHP */
-        if (Domain)[request setValue:[_webView phpCookieStringWithDomain:Domain] forHTTPHeaderField:@"Cookie"];
-    }
+    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];//重置空白界面
     [_webView loadRequest:request];
 }
 
@@ -233,15 +250,20 @@ static MessageBlock messageCallback = nil;
     if (_config == nil) {
         _config = [[WKWebViewConfiguration alloc] init];
         _config.userContentController = [[WKUserContentController alloc] init];
-        _config.allowsInlineMediaPlayback = YES;        // 允许在线播放
-        _config.allowsAirPlayForMediaPlayback = YES;  //允许视频播放
         _config.preferences = [[WKPreferences alloc] init];
         _config.preferences.minimumFontSize = 10;
         _config.preferences.javaScriptEnabled = YES; //是否支持 JavaScript
+        _config.preferences.javaScriptCanOpenWindowsAutomatically = YES;
         _config.processPool = [[WKProcessPool alloc] init];
+        
+        _config.allowsInlineMediaPlayback = YES;        // 允许在线播放
+        if (@available(iOS 9.0, *)) {
+            _config.allowsAirPlayForMediaPlayback = YES;  //允许视频播放
+        }
+        
         NSMutableString *javascript = [NSMutableString string];
         [javascript appendString:@"document.documentElement.style.webkitTouchCallout='none';"];//禁止长按
-        //[javascript appendString:@"document.documentElement.style.webkitUserSelect='none';"];//禁止选择
+        [javascript appendString:@"document.documentElement.style.webkitUserSelect='none';"];//禁止选择
         WKUserScript *noneSelectScript = [[WKUserScript alloc] initWithSource:javascript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
         [_config.userContentController addUserScript:noneSelectScript];
     }
@@ -274,10 +296,15 @@ static MessageBlock messageCallback = nil;
  */
 - (void)addScriptMessageHandlerWithName:(NSArray<NSString *> *)nameArr
 {
-    if (_config.userContentController) return;
     /* removeScriptMessageHandlerForName 同时使用，否则内存泄漏 */
     for (NSString * objStr in nameArr) {
-        [self.config.userContentController addScriptMessageHandler:self name:objStr];
+        @try{
+            [self.config.userContentController addScriptMessageHandler:self name:objStr];
+        }@catch (NSException *e){
+            NSLog(@"异常信息：%@",e);
+        }@finally{
+            
+        }
     }
     self.messageHandlerName = nameArr;
 }
@@ -319,7 +346,7 @@ static MessageBlock messageCallback = nil;
 #pragma mark -
 #pragma mark - WKWebview 缓存 cookie／cache
 
-- (void)setcookie:(NSHTTPCookie *)cookie
+- (void)setCookie:(NSHTTPCookie *)cookie
 {
     [self.webView insertCookie:cookie];
 }
@@ -330,17 +357,27 @@ static MessageBlock messageCallback = nil;
    return [self.webView sharedHTTPCookieStorage];
 }
 
-/** 删除所有的cookies */
-- (void)deleteAllWKCookies
+/** 删除某一个cookies */
+- (void)deleteWKCookie:(NSHTTPCookie *)cookie completionHandler:(nullable void (^)(void))completionHandler
 {
-    [self.webView deleteAllWKCookies];
+    [self.webView deleteWKCookie:cookie completionHandler:completionHandler];
+}
+
+/** 删除所有的cookies */
+- (void)clearWKCookies{
+    
+    [self.webView clearWKCookies];
 }
 
 /** 删除所有缓存不包括cookies */
-- (void)deleteAllWebCache
-{
-    [self.webView deleteAllWebCache];
-    [_config.userContentController removeAllUserScripts];
+- (void)clearWebCacheFinish:(void(^)(BOOL finish,NSError *error))block{
+    
+    [self.webView clearWebCacheFinish:block];
+}
+
+- (void)deleteWKCookiesByHost:(NSURL *)host completionHandler:(nullable void (^)(void))completionHandler{
+    
+    [self.webView deleteWKCookiesByHost:host completionHandler:completionHandler];
 }
 
 #pragma mark -
@@ -355,12 +392,12 @@ static MessageBlock messageCallback = nil;
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:
 (WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
-    
     if (_longpress) {
         _longpress = NO;
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
+    
     NSString *scheme = navigationAction.request.URL.scheme.lowercaseString;
     if (![scheme containsString:@"http"] && ![scheme containsString:@"about"] && ![scheme containsString:@"file"]) {
         // 对于跨域，需要手动跳转， 用系统浏览器（Safari）打开
@@ -394,17 +431,24 @@ static MessageBlock messageCallback = nil;
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
 {
+    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+    NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
     if (@available(iOS 11.0, *)) {
         //浏览器自动存储cookie
     }else
     {
         //存储cookies
         dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-            NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
-            NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
-            //存储cookies
-            for (NSHTTPCookie *cookie in cookies) {
-                [_webView insertCookie:cookie];
+
+            @try{
+                //存储cookies
+                for (NSHTTPCookie *cookie in cookies) {
+                    [_webView insertCookie:cookie];
+                }
+            }@catch (NSException *e) {
+                NSLog(@"failed: %@", e);
+            } @finally {
+                
             }
         });
     }
@@ -413,6 +457,18 @@ static MessageBlock messageCallback = nil;
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
+    
+        NSLog(@"%@",webView.URL.absoluteString);
+    
+    if ([webView.URL.absoluteString.lowercaseString isEqualToString:@"about:blank"]) {
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [webView.backForwardList performSelector:NSSelectorFromString(@"_removeAllItems")];
+#pragma clang diagnostic pop
+        
+    }
+    
         isloadSuccess = YES;
         //获取当前 URLString
         [webView evaluateJavaScript:@"window.location.href" completionHandler:^(id _Nullable urlStr, NSError * _Nullable error) {
@@ -439,6 +495,7 @@ static MessageBlock messageCallback = nil;
 /** 导航失败时会回调 */
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
     [self.activityIndicator stopAnimating];
+    
 }
 
 /** 页面内容到达main frame时回调 */
@@ -449,9 +506,8 @@ static MessageBlock messageCallback = nil;
 /** 失败回调 */
 - (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
 {
-     [self.activityIndicator stopAnimating];
+    [self.activityIndicator stopAnimating];
 }
-
 
 #pragma mark -- navigationBar customUI
 #pragma mark 导航栏的菜单按钮
@@ -461,7 +517,6 @@ static MessageBlock messageCallback = nil;
     self.navigationItem.leftBarButtonItem = self.backItem;
     [(UIButton *)self.backItem.customView addTarget:self action:@selector(backNative) forControlEvents:UIControlEventTouchUpInside];
 }
-
 
 - (void)goback{
     [self backNative];
@@ -503,49 +558,88 @@ static MessageBlock messageCallback = nil;
 }
 
 #pragma mark 菜单按钮点击
+
+- (void)addMenuWithButtonTitle:(NSArray<NSString *> *)buttonTitle block:(MenuBlock)block{
+    
+    _menu.defaultType = NO;
+    _buttonTitle = buttonTitle;
+    _menuBlock = block;
+}
+
 - (void)menuBtnAction:(UIButton *)sender
 {
-    NSArray *buttonTitleArray = @[@"safari打开", @"复制链接", @"分享", @"刷新"];
-    [UIAlertController ba_actionSheetShowInViewController:self title:@"更多" message:nil buttonTitleArray:buttonTitleArray buttonTitleColorArray:nil popoverPresentationControllerBlock:^(UIPopoverPresentationController * _Nonnull popover) {
-        
-    } block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-     
-        if (buttonIndex == 0)
-        {
-            if (_currentURLString.length > 0)
-            {
-                /*! safari打开 */
-                [NSURL SafariOpenURL:[NSURL URLWithString:_currentURLString]];
-                return;
-            }
-            else
-            {
-                [UIAlertController PAlertWithTitle:@"提示" message:@"无法获取当前链接" completion:nil];
-            }
-        }
-        else if (buttonIndex == 1)
-        {
-            /*! 复制链接 */
-            if (_currentURLString.length > 0)
-            {
-                [UIPasteboard generalPasteboard].string = _currentURLString;
-                return;
-            }
-            else
-            {
-                 [UIAlertController PAlertWithTitle:@"提示" message:@"无法获取当前链接" completion:nil];
-            }
-        }
-        else if (buttonIndex == 2)
-        {
+    if (self.menu.defaultType) {
+        NSMutableArray *buttonTitleArray = [NSMutableArray array];
+        [buttonTitleArray addObjectsFromArray:@[@"safari打开", @"复制链接", @"分享", @"截图", @"刷新"]];
+        if (self.showLog) [buttonTitleArray addObject:@"执行日志"];
+        [self.menu defaultMenuShowInViewController:self title:@"更多" message:nil buttonTitleArray:buttonTitleArray buttonTitleColorArray:nil popoverPresentationControllerBlock:^(UIPopoverPresentationController * _Nonnull popover) {
             
-        }
-        else if (buttonIndex == 3)
-        {
-            /*! 刷新 */
-            [_webView reloadFromOrigin];
-        }
-        
+        } block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex)
+         {
+             if (buttonIndex == 0)
+             {
+                 if (_currentURLString.length > 0)
+                 {
+                     /*! safari打开 */
+                     [NSURL SafariOpenURL:[NSURL URLWithString:_currentURLString]];
+                     return;
+                 }
+                 else
+                 {
+                     [UIAlertController PAlertWithTitle:@"提示" message:@"无法获取当前链接" completion:nil];
+                 }
+             }
+             else if (buttonIndex == 1)
+             {
+                 /*! 复制链接 */
+                 if (_currentURLString.length > 0)
+                 {
+                     [UIPasteboard generalPasteboard].string = _currentURLString;
+                     return;
+                 }
+                 else
+                 {
+                     [UIAlertController PAlertWithTitle:@"提示" message:@"无法获取当前链接" completion:nil];
+                 }
+             }
+             else if (buttonIndex == 2)
+             {
+                 
+             }
+             else if (buttonIndex == 3)
+             {
+                 [self snapshotBtn];
+             }
+             else if (buttonIndex == 4)
+             {
+                 /*! 刷新 */
+                 [_webView reloadFromOrigin];
+             }
+         }];
+    }else
+    {
+        [self.menu customMenuShowInViewController:self
+                                             title:@"更多"
+                                           message:nil
+                                  buttonTitleArray:self.buttonTitle
+                             buttonTitleColorArray:nil popoverPresentationControllerBlock:^(UIPopoverPresentationController * _Nonnull popover) {
+            
+        } block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex)
+         {
+             _menuBlock ? _menuBlock(alertController, action, buttonIndex) : NULL;
+         }];
+    }
+}
+
+//saveSnap
+- (void)snapshotBtn{
+    
+    __weak typeof(self) weakSelf = self;
+    [TYSnapshot screenSnapshot:self.webView finishBlock:^(UIImage *snapShotImage) {
+        UIViewController *preVc = [[PreviewVc alloc] init:snapShotImage];
+        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:preVc];
+        nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [weakSelf presentViewController:nc animated:YES completion:nil];
     }];
 }
 
@@ -554,7 +648,6 @@ static MessageBlock messageCallback = nil;
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 #pragma mark -
 #pragma mark --- 进度条
@@ -672,16 +765,6 @@ static MessageBlock messageCallback = nil;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
 

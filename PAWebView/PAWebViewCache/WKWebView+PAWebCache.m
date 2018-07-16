@@ -20,41 +20,36 @@
 }
 
 #pragma mark - 清除webView缓存
-- (void)deleteAllWebCache
+- (void)clearWebCacheFinish:(void (^)(BOOL, NSError *))block
 {
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
-        NSSet *websiteDataTypes = [NSSet setWithArray:
-                                   @[WKWebsiteDataTypeDiskCache,
-                                     WKWebsiteDataTypeOfflineWebApplicationCache,
-                                     WKWebsiteDataTypeMemoryCache,
-                                     WKWebsiteDataTypeLocalStorage,
-                                     //WKWebsiteDataTypeCookies,
-                                     WKWebsiteDataTypeSessionStorage,
-                                     WKWebsiteDataTypeIndexedDBDatabases,
-                                     WKWebsiteDataTypeWebSQLDatabases
-                                     ]];
-        //// All kinds of data
-        //NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
-        //// Date from
-        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
-        //// Execute
-        [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
-            [UIAlertController PAlertWithTitle:@"提示" message:@"缓存清理完成" completion:nil];
-        }];
+            NSSet *websiteDataTypes = [NSSet setWithArray:
+                                       @[WKWebsiteDataTypeDiskCache,
+                                         WKWebsiteDataTypeOfflineWebApplicationCache,
+                                         WKWebsiteDataTypeMemoryCache,
+                                         WKWebsiteDataTypeLocalStorage,
+                                         //WKWebsiteDataTypeCookies,
+                                         WKWebsiteDataTypeSessionStorage,
+                                         WKWebsiteDataTypeIndexedDBDatabases,
+                                         WKWebsiteDataTypeWebSQLDatabases
+                                         ]];
+            //// All kinds of data
+            //NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+            //// Date from
+            NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+            //// Execute
+            [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
+                block ? block(YES,nil): NULL;
+            }];
     } else {
         NSString *libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString *cookiesFolderPath = [libraryPath stringByAppendingString:@"/Cookies"];
         NSError *errors;
         [[NSFileManager defaultManager] removeItemAtPath:cookiesFolderPath error:&errors];
-        if (!errors) {
-            [UIAlertController PAlertWithTitle:@"提示" message:@"缓存清理完成" completion:nil];
-        }else
-        {
-            [UIAlertController PAlertWithTitle:@"提示" message:@"缓存清理失败" completion:nil];
-        }
+ 
+        block ? block(YES,errors): NULL;
     }
 }
-
 
 /** 清理缓存的方法，这个方法会清除缓存类型为HTML类型的文件*/
 - (void)clearHTMLCache
