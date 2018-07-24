@@ -70,6 +70,7 @@ static MessageBlock messageCallback = nil;
         self.menu = [PAWebViewMenu shareInstance];
         self.menu.defaultType = YES;
         self.openCache = YES;
+        self.showLog = NO;
         [self loadRequestURL:[NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];  //初始化，提前加载。
     }
     return self;
