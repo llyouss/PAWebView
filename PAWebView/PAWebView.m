@@ -40,16 +40,13 @@ static MessageBlock messageCallback = nil;
 
 @property (nonatomic, retain) PAWebViewMenu *menu;
 @property (nonatomic,   copy) MenuBlock menuBlock;
+@property (nonatomic,   copy) QRCodeInfoBlock qrcodeBlock;
 @property (nonatomic, retain) NSArray<NSString *> *buttonTitle;
-@property (nonatomic,   weak) id<PAWKScriptMessageHandler> messageHandlerdelegate;
 @property (nonatomic, strong) WKWebViewConfiguration *config;
 @property (nonatomic, strong) UIActivityIndicatorView * activityIndicator;
 @property (nonatomic, strong) UIProgressView *wkProgressView;   //进度条
 @property (nonatomic, retain) NSArray *messageHandlerName;
 @property (nonatomic, assign) BOOL longpress;
-
-//@property (nonatomic, strong) WBWebViewJSBridge * JSBridge;
-//@property (nonatomic, strong) WBWebViewConsole * console;
 
 @end
 
@@ -73,7 +70,7 @@ static MessageBlock messageCallback = nil;
         self.menu = [PAWebViewMenu shareInstance];
         self.menu.defaultType = YES;
         self.openCache = YES;
-        [self webView];  //初始化，提前加载。
+        [self loadRequestURL:[NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];  //初始化，提前加载。
     }
     return self;
 }
@@ -84,7 +81,6 @@ static MessageBlock messageCallback = nil;
     self.view.backgroundColor = [UIColor whiteColor];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.view addSubview:self.webView];
-        [self addBackButton];
         [self configMenuItem];
     });
 }
@@ -92,6 +88,7 @@ static MessageBlock messageCallback = nil;
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    [self addBackButton];
 }
 
 #pragma mark -
@@ -139,7 +136,7 @@ static MessageBlock messageCallback = nil;
 - (void)clearBackForwardList{
     
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wsarc-performSelector-leaks"
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [self.webView.backForwardList performSelector:NSSelectorFromString(@"_removeAllItems")];
 #pragma clang diagnostic pop
     
@@ -263,7 +260,7 @@ static MessageBlock messageCallback = nil;
         
         NSMutableString *javascript = [NSMutableString string];
         [javascript appendString:@"document.documentElement.style.webkitTouchCallout='none';"];//禁止长按
-        [javascript appendString:@"document.documentElement.style.webkitUserSelect='none';"];//禁止选择
+//        [javascript appendString:@"document.documentElement.style.webkitUserSelect='none';"];//禁止选择
         WKUserScript *noneSelectScript = [[WKUserScript alloc] initWithSource:javascript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
         [_config.userContentController addUserScript:noneSelectScript];
     }
@@ -337,8 +334,8 @@ static MessageBlock messageCallback = nil;
     NSLog(@" message.body =   %@ ",message.body);
     NSLog(@" message.name =   %@ ",message.name);
     NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-    if (_messageHandlerdelegate && [_messageHandlerdelegate respondsToSelector:@selector(PAUserContentController:didReceiveScriptMessage:)]) {
-        [_messageHandlerdelegate PAUserContentController:userContentController didReceiveScriptMessage:message];
+    if (_messageHandlerDelegate && [_messageHandlerDelegate respondsToSelector:@selector(PAUserContentController:didReceiveScriptMessage:)]) {
+        [_messageHandlerDelegate PAUserContentController:userContentController didReceiveScriptMessage:message];
     }
     messageCallback ? messageCallback(userContentController,message) : NULL;
 }

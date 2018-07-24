@@ -27,17 +27,16 @@ typedef void (^MenuBlock)(UIAlertController *  alertController, UIAlertAction * 
 @interface PAWebView : WKBaseWebView
 
 @property (nonatomic, strong) WKWebView *webView;
-@property (nonatomic, assign) BOOL openCache;   //缓存
-@property (nonatomic, assign) BOOL showLog;     //执行日志
 @property (nonatomic,   copy) NSString *currentURLString;  //当前页面的URL
-@property (nonatomic,   copy) QRCodeInfoBlock qrcodeBlock;
-
+@property (nonatomic,   weak) id<PAWKScriptMessageHandler> messageHandlerDelegate;
 @property (nonatomic, retain) UIColor *paprogressTintColor;  //进度条颜色
 @property (nonatomic, retain) UIColor *paprogressTrackTintColor;
+@property (nonatomic, assign) BOOL openCache;   //缓存
+@property (nonatomic, assign) BOOL showLog;     //执行日志
 
 + (instancetype)shareInstance;
 
-/** 加载网页 加载网页时注入 cookies 把链接更改为 NSMutableURLRequest ，用户自定义缓存的方式和其他的一些具体的设置*/
+/** 加载网页 加载网页时注入 cookies 把链接更改为 NSMutableURLRequest ，自定义缓存的方式和其他的一些具体的设置*/
 - (void)loadRequestURL:(NSMutableURLRequest *)request;
 - (void)loadRequestURL:(NSMutableURLRequest *)request params:(NSDictionary*)params;
 - (void)loadLocalHTMLWithFileName:(NSString *)htmlName;
@@ -80,6 +79,7 @@ typedef void (^MenuBlock)(UIAlertController *  alertController, UIAlertAction * 
 
 /*清除backForwardList 列表*/
 - (void)clearBackForwardList;
+
 /**
   读取本地磁盘的cookies，包括WKWebview的cookies和sharedHTTPCookieStorage存储的cookies
 
