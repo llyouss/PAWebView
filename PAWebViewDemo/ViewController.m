@@ -42,7 +42,7 @@ typedef void (^runCaseBlock)(id);
     [self addMessageHandleName];
     
     //加载网页
-    [webView loadRequestURL:[NSURL URLWithString:@"https://www.sina.cn"]];
+    [webView loadRequestURL:[NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.sina.cn"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:20.0f]];
 //      [webView loadLocalHTMLWithFileName:@"main"];
 //    webView loadLocalHTMLWithFileName:<#(NSString *)#> 加载本地网页
 //    [webView reload]; //重新加载网页
