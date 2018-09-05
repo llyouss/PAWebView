@@ -127,7 +127,7 @@ For a complete example on how to use PAWeView, see the Sample Project.
  
  ```
  
- -清除 backForwardList 列表
+ - 清除 backForwardList 列表
  
  ```
  /*清除backForwardList 列表*/
