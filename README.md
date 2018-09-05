@@ -28,11 +28,26 @@ For a complete example on how to use PAWeView, see the Sample Project.
   ```
   //初始化单例  
    PAWebView *webView = [PAWebView shareInstance];  
-  //打开缓存  
-   webView.openCache = YES;    
+   
   //加载网页  
-   [webView loadRequestURL:[NSURL URLWithString: @"https://www.sina.cn"]];  
+  [webView loadRequestURL:[NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.sina.cn"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:20.0f]];
    [self.navigationController pushViewController:webView animated:YES];
+   
+   //缓存沿用了 NSURLRequest 的缓存机制，用户可以自定义设置；
+  typedef NS_ENUM(NSUInteger, NSURLRequestCachePolicy)
+  {
+      NSURLRequestUseProtocolCachePolicy = 0, //默认的缓存策略
+
+      NSURLRequestReloadIgnoringLocalCacheData = 1, //忽略缓存，从服务端加载数据；
+      NSURLRequestReloadIgnoringLocalAndRemoteCacheData = 4, // Unimplemented
+      NSURLRequestReloadIgnoringCacheData = NSURLRequestReloadIgnoringLocalCacheData,
+
+      NSURLRequestReturnCacheDataElseLoad = 2,
+      NSURLRequestReturnCacheDataDontLoad = 3,
+
+      NSURLRequestReloadRevalidatingCacheData = 5, // Unimplemented
+  };
+   
   ```
 - Refress
  ```
@@ -76,12 +91,48 @@ For a complete example on how to use PAWeView, see the Sample Project.
  ```
  - Cooikes Manager 
  ```
-  //设置cookies  
-  //webView setcookie:<#(NSHTTPCookie *)#>    
-  //获取缓存中的cookies  
-   [webView WKSharedHTTPCookieStorage];   
-  // 删除缓存中所有的cookies  
-   [webView deleteAllWKCookies];  
+/**
+  读取本地磁盘的cookies，包括WKWebview的cookies和sharedHTTPCookieStorage存储的cookies
+
+ @return 返回包含所有的cookies的数组；
+ 当系统低于 iOS11 时，cookies 将同步NSHTTPCookieStorage的cookies，当系统大于iOS11时，cookies 将同步
+ */
+- (NSMutableArray *)WKSharedHTTPCookieStorage;
+
+/**
+  提供cookies插入，用于loadRequest 网页之前
+
+ @param cookie NSHTTPCookie 类型
+  cookie 需要设置 cookie 的name，value，domain，expiresDate（过期时间，当不设置过期时间，cookie将不会自动清除）；
+  cookie 设置expiresDate时使用 [cookieProperties setObject:expiresDate forKey:NSHTTPCookieExpires];将不起作用，原因不明；使用 cookieProperties[expiresDate] = expiresDate; 设置cookies 设置时间。
+ */
+- (void)setCookie:(NSHTTPCookie *)cookie;
+
+/** 删除单个cookie */
+- (void)deleteWKCookie:(NSHTTPCookie *)cookie completionHandler:(nullable void (^)(void))completionHandler;
+/** 删除域名下的所有的cookie */
+- (void)deleteWKCookiesByHost:(NSURL *)host completionHandler:(nullable void (^)(void))completionHandler;
+
+/** 清除所有的cookies */
+- (void)clearWKCookies;
  
  ```
+ 
+ - 清除缓存
+ 
+ ```
+ 
+ /** 清除所有缓存（cookie除外） */
+- (void)clearWebCacheFinish:(void(^)(BOOL finish,NSError *error))block;
+ 
+ ```
+ 
+ -清除 backForwardList 列表
+ 
+ ```
+ /*清除backForwardList 列表*/
+- (void)clearBackForwardList;
+ 
+ ```
+ 
  
