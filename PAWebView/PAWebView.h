@@ -26,7 +26,7 @@ typedef void (^MenuBlock)(UIAlertController *  alertController, UIAlertAction * 
 
 @interface PAWebView : WKBaseWebView
 
-@property (nonatomic, strong) WKWebView *webView;
+@property (nonatomic, retain) WKWebView *webView;
 @property (nonatomic,   copy) NSString *currentURLString;  //当前页面的URL
 @property (nonatomic,   weak) id<PAWKScriptMessageHandler> messageHandlerDelegate;
 @property (nonatomic, retain) UIColor *paprogressTintColor;  //进度条颜色
@@ -97,8 +97,9 @@ typedef void (^MenuBlock)(UIAlertController *  alertController, UIAlertAction * 
  */
 - (void)setCookie:(NSHTTPCookie *)cookie;
 
-/** 删除某一个cookies 当cookie 的 */
+/** 删除单个cookie */
 - (void)deleteWKCookie:(NSHTTPCookie *)cookie completionHandler:(nullable void (^)(void))completionHandler;
+/** 删除域名下的所有的cookie */
 - (void)deleteWKCookiesByHost:(NSURL *)host completionHandler:(nullable void (^)(void))completionHandler;
 
 /** 清除所有的cookies */

@@ -61,12 +61,13 @@
     myFrame.origin.y = -((index) * superView.frame.size.height);
     self.frame = myFrame;
     
+    __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
         
         [superView drawViewHierarchyInRect:snapshotFrame afterScreenUpdates:YES];
         
         if(index < maxIndex){
-            [self scrollToDraw:index + 1 maxIndex:maxIndex finishBlock:finishBlock];
+            [weakSelf scrollToDraw:index + 1 maxIndex:maxIndex finishBlock:finishBlock];
         }else{
             if (finishBlock) {
                 finishBlock();

@@ -31,6 +31,7 @@
 
 - (WKNavigation *)post_loadRequest:(NSURLRequest *)request
 {
+    NSLog(@"%@",[request.HTTPMethod uppercaseString]);
     if ([[request.HTTPMethod uppercaseString] isEqualToString:@"POST"]){
         NSString *url = request.URL.absoluteString;
         NSString *params = [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding];

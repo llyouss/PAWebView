@@ -52,14 +52,15 @@
 
 + (void)openURL:(NSURL *)URL
 {
-    NSLog(@"%@",URL.host.lowercaseString);
+    __weak typeof(self)weekSelf = self;
     if ([URL.host.lowercaseString isEqualToString:@"itunes.apple.com"] ||
         [URL.host.lowercaseString isEqualToString:@"itunesconnect.apple.com"]) {
         
         [UIAlertController PAlertWithTitle:[NSString stringWithFormat:@"即将打开Appstore下载应用"] message:@"如果不是本人操作，请取消" action1Title:@"取消" action2Title:@"打开" action1:^{
-            return;
+   
         } action2:^{
-           [self SafariOpenURL:URL];
+            
+           [weekSelf safariOpenURL:URL];
         }];
     }else{
         
@@ -69,48 +70,46 @@
         NSString *name =[appInfo objectForKey:@"name"];
 
         if ([[UIApplication sharedApplication] canOpenURL:URL]) {
-            if (!name) {
-                name = URL.scheme;
-            }
+            
+            if(!name) name = URL.scheme;
             [UIAlertController PAlertWithTitle:[NSString stringWithFormat:@"即将打开%@",name] message:@"如果不是本人操作，请取消" action1Title:@"取消" action2Title:@"打开" action1:^{
                 
-                return;
             } action2:^{
-                [self SafariOpenURL:URL];
+                
+                [weekSelf safariOpenURL:URL];
             }];
+            
         }else{
+            
             if (!appInfo) return;
             NSString *urlString = [appInfo objectForKey:@"url"];
             if (!urlString) return;
             NSURL *appstoreURL = [NSURL URLWithString:urlString];
             [UIAlertController PAlertWithTitle:[NSString stringWithFormat:@"前往Appstore下载"] message:@"你还没安装该应用，是否前往Appstore下载？" action1Title:@"取消" action2Title:@"去下载" action1:^{
-                return;
+    
             } action2:^{
-                [self SafariOpenURL:appstoreURL];
+                
+                [weekSelf safariOpenURL:appstoreURL];
             }];
         }
     }
 }
 
-+ (void)SafariOpenURL:(NSURL *)URL
++ (void)safariOpenURL:(NSURL *)URL
 {
-    
-#ifdef IOS10BWK
-    
-    [[UIApplication sharedApplication] openURL:URL options:@{UIApplicationOpenURLOptionUniversalLinksOnly : @NO} completionHandler:^(BOOL success)
-     {
-         if (!success) {
-             [UIAlertController PAlertWithTitle:@"提示" message:@"打开失败" completion:nil];
-         }
-     }];
-#else
-    
-    if (![[UIApplication sharedApplication] openURL:URL]) {
-        [UIAlertController PAlertWithTitle:@"提示" message:@"打开失败" completion:nil];
+    if (@available(iOS 10.0, *)) {
+        [[UIApplication sharedApplication] openURL:URL options:@{UIApplicationOpenURLOptionUniversalLinksOnly : @NO} completionHandler:^(BOOL success)
+         {
+             if (!success) {
+                 [UIAlertController PAlertWithTitle:@"提示" message:@"打开失败" completion:nil];
+             }
+         }];
+    } else {
+        
+        if (![[UIApplication sharedApplication] openURL:URL]) {
+            [UIAlertController PAlertWithTitle:@"提示" message:@"打开失败" completion:nil];
+        }
     }
-    
-#endif
-    
 }
 
 @end

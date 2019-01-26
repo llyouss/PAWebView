@@ -90,8 +90,9 @@ CGPoint touchPoint;
     }
 
     self.userInteractionEnabled = NO;
+    __weak typeof(self)weekSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(interval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.userInteractionEnabled = YES;
+        weekSelf.userInteractionEnabled = YES;
     });
 }
 
@@ -247,24 +248,22 @@ CGPoint touchPoint;
     
     // 执行对应的JS代码 获取url
     __block NSString *imgUrlString;
-    __weak typeof(self)weekSelf = self;
-    
+    __weak typeof(self)weakSelf = self;
     //抓取image
     [self evaluateJavaScript:imgJS completionHandler:^(id _Nullable imgUrl, NSError * _Nullable error)
      {
-         __strong typeof(self)strongSelf = weekSelf;
          imgUrlString = imgUrl;
          
          //抓取title
-         [strongSelf evaluateJavaScript:titleJS completionHandler:^(id _Nullable title, NSError * _Nullable error)
+         [weakSelf evaluateJavaScript:titleJS completionHandler:^(id _Nullable title, NSError * _Nullable error)
           {
               //抓取title的类型
-              [strongSelf evaluateJavaScript:typeJS completionHandler:^(id _Nullable t, NSError * _Nullable error) {
+              [weakSelf evaluateJavaScript:typeJS completionHandler:^(id _Nullable t, NSError * _Nullable error) {
                   
                   //抓取href
-                  [self hrefFromJSPointX:touchPoint.x ppintY:touchPoint.y callBack:^(NSString *hre) {
+                  [weakSelf hrefFromJSPointX:touchPoint.x ppintY:touchPoint.y callBack:^(NSString *hre) {
                       
-                      [self showActionWithImage:imgUrlString href:hre title:title type:t];
+                      [weakSelf showActionWithImage:imgUrlString href:hre title:title type:t];
                   }];
               }];
           }];
@@ -298,7 +297,7 @@ CGPoint touchPoint;
     
 #pragma mark -
 #pragma mark - 创建按钮
-    
+    __weak typeof(self)weakSelf = self;
     UIAlertAction *ActionSacn = [UIAlertAction actionWithTitle:@"识别二维码"
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action)
@@ -312,14 +311,14 @@ CGPoint touchPoint;
     //看图模式
     UIAlertAction *ActionIntoImageMode = [UIAlertAction actionWithTitle:@"进入看图模式" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         longPress ? longPress(NO) : NULL;
-        [self showAllImageFromHtmIndex:imgUrlString];
+        [weakSelf showAllImageFromHtmIndex:imgUrlString];
     }];
      
     
     //下载图片
     UIAlertAction *ActionloadImage = [UIAlertAction actionWithTitle:@"保存图片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         longPress ? longPress(NO) : NULL;
-        [self LoadImageFromURL:[NSURL URLWithString:imgUrlString]];
+        [weakSelf LoadImageFromURL:[NSURL URLWithString:imgUrlString]];
     }];
     
     //复制图片地址
@@ -336,23 +335,23 @@ CGPoint touchPoint;
     
     //复制标题
     UIAlertAction *ActionCopyInnerTitle = [UIAlertAction actionWithTitle:@"复制链接文字" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
         longPress ? longPress(NO) : NULL;
         [UIPasteboard generalPasteboard].string = innerTitle;
-        
     }];
     
     //复制链接地址
     UIAlertAction *ActionCopyHref = [UIAlertAction actionWithTitle:@"复制链接地址" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
         longPress ? longPress(NO) : NULL;
         [UIPasteboard generalPasteboard].string = href;
-        
     }];
     
     
     //取消
     UIAlertAction *Canel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        longPress ? longPress(NO) : NULL;
         
+        longPress ? longPress(NO) : NULL;
     }];
     
     
@@ -447,11 +446,11 @@ CGPoint touchPoint;
         [PHAssetChangeRequest creationRequestForAssetFromImage:image];
         
     } completionHandler:^(BOOL success, NSError * _Nullable error) {
-        if (success)
-        {
+        if (success){
+            
             [UIAlertController PAlertWithTitle:@"提示" message:@"已经保存到相册" completion:nil];
-        }else
-        {
+        }else{
+            
             [UIAlertController PAlertWithTitle:@"提示" message:@"保存失败" completion:nil];
         }
     }];

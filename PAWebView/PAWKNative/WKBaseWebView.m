@@ -56,9 +56,10 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     //???:设置状态栏颜色（字体和背景）
+    __weak typeof(self)weakSelf = self;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        self.view.backgroundColor = [UIColor colorWithRed:4/255.0 green:176/255.0 blue:250/255.0 alpha:1];
+        weakSelf.view.backgroundColor = [UIColor colorWithRed:4/255.0 green:176/255.0 blue:250/255.0 alpha:1];
     });
     return UIStatusBarStyleLightContent;
 }

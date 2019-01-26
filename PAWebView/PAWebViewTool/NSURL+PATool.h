@@ -29,6 +29,6 @@
  */
 + (void)openURL:(NSURL *)URL;
 
-+ (void)SafariOpenURL:(NSURL *)URL;
++ (void)safariOpenURL:(NSURL *)URL;
 
 @end

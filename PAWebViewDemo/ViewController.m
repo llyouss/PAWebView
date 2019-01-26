@@ -42,7 +42,7 @@ typedef void (^runCaseBlock)(id);
     [self addMessageHandleName];
     
     //加载网页
-    [webView loadRequestURL:[NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.sina.cn"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:20.0f]];
+    [webView loadRequestURL:[NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://ph.6632888.com/ph2.html"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:20.0f]];
 //      [webView loadLocalHTMLWithFileName:@"main"];
 //    webView loadLocalHTMLWithFileName:<#(NSString *)#> 加载本地网页
 //    [webView reload]; //重新加载网页
@@ -51,7 +51,7 @@ typedef void (^runCaseBlock)(id);
     [self.navigationController pushViewController:webView animated:YES];
     
     //调用js
-    [self performSelector:@selector(TESTCallJS) withObject:nil afterDelay:6];
+//    [self performSelector:@selector(TESTCallJS) withObject:nil afterDelay:6];
     
 //    [webView goback]; //返回上一级
 //    [webView goForward]; //返回下一级

@@ -17,6 +17,7 @@
 #import "registerURLSchemes.h"
 #import "PAWebViewMenu.h"
 #import "TYSnapshot.h"
+#import "NSURLProtocol+WKWebVIew.h"
 
 //原生组件高度
 #define WKSTATUS_BAR_HEIGHT 0
@@ -42,9 +43,9 @@ static MessageBlock messageCallback = nil;
 @property (nonatomic,   copy) MenuBlock menuBlock;
 @property (nonatomic,   copy) QRCodeInfoBlock qrcodeBlock;
 @property (nonatomic, retain) NSArray<NSString *> *buttonTitle;
-@property (nonatomic, strong) WKWebViewConfiguration *config;
-@property (nonatomic, strong) UIActivityIndicatorView * activityIndicator;
-@property (nonatomic, strong) UIProgressView *wkProgressView;   //进度条
+@property (nonatomic, retain) WKWebViewConfiguration *config;
+@property (nonatomic, retain) UIActivityIndicatorView * activityIndicator;
+@property (nonatomic, retain) UIProgressView *wkProgressView;   //进度条
 @property (nonatomic, retain) NSArray *messageHandlerName;
 @property (nonatomic, assign) BOOL longpress;
 
@@ -72,6 +73,9 @@ static MessageBlock messageCallback = nil;
         self.openCache = YES;
         self.showLog = NO;
         [self loadRequestURL:[NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];  //初始化，提前加载。
+        
+//        [NSURLProtocol wk_registerScheme:@"http"];
+//        [NSURLProtocol wk_registerScheme:@"https"];
     }
     return self;
 }
@@ -80,9 +84,10 @@ static MessageBlock messageCallback = nil;
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    __weak typeof(self)weekSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.view addSubview:self.webView];
-        [self configMenuItem];
+        [weekSelf.view addSubview:weekSelf.webView];
+        [weekSelf configMenuItem];
     });
 }
 
@@ -115,7 +120,7 @@ static MessageBlock messageCallback = nil;
         _webView.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
         _webView.scrollView.showsVerticalScrollIndicator = YES;
         _webView.scrollView.showsHorizontalScrollIndicator = NO;
-    
+   
         if (@available(iOS 11.0, *)) {
             WKHTTPCookieStore *cookieStore = _webView.configuration.websiteDataStore.httpCookieStore;
             [_webView syncCookiesToWKHTTPCookieStore:cookieStore];
@@ -126,8 +131,9 @@ static MessageBlock messageCallback = nil;
         //添加页面跳转通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRequestFromNotification:) name:NotiName_LoadRequest object:nil];
         //添加长按手势
+        __weak typeof(self)weakSelf = self;
         [_webView  addGestureRecognizerObserverWebElements:^(BOOL longpress) {
-            _longpress = longpress;
+            weakSelf.longpress = longpress;
         }];
     }
 
@@ -249,7 +255,7 @@ static MessageBlock messageCallback = nil;
         _config = [[WKWebViewConfiguration alloc] init];
         _config.userContentController = [[WKUserContentController alloc] init];
         _config.preferences = [[WKPreferences alloc] init];
-        _config.preferences.minimumFontSize = 10;
+        _config.preferences.minimumFontSize = 8;
         _config.preferences.javaScriptEnabled = YES; //是否支持 JavaScript
         _config.preferences.javaScriptCanOpenWindowsAutomatically = YES;
         _config.processPool = [[WKProcessPool alloc] init];
@@ -404,7 +410,7 @@ static MessageBlock messageCallback = nil;
             [UIAlertController PAlertWithTitle:@"提示" message:@"是否打开appstore？" action1Title:@"返回" action2Title:@"去下载" action1:^{
                 [webView goBack];
             } action2:^{
-                [NSURL SafariOpenURL:navigationAction.request.URL];
+                [NSURL safariOpenURL:navigationAction.request.URL];
             }];
             decisionHandler(WKNavigationActionPolicyCancel);
             return;
@@ -429,26 +435,31 @@ static MessageBlock messageCallback = nil;
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
 {
+    
+    __weak typeof(self)weakSelf = self;
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
-    NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
-    if (@available(iOS 11.0, *)) {
-        //浏览器自动存储cookie
-    }else
-    {
-        //存储cookies
-        dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-
-            @try{
-                //存储cookies
-                for (NSHTTPCookie *cookie in cookies) {
-                    [_webView insertCookie:cookie];
-                }
-            }@catch (NSException *e) {
-                NSLog(@"failed: %@", e);
-            } @finally {
+    if ([response.URL.scheme.lowercaseString containsString:@"http"]) {
+        NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
+        if (@available(iOS 11.0, *)) {
+            //浏览器自动存储cookie
+        }else
+        {
+            //存储cookies
+            dispatch_sync(dispatch_get_global_queue(0, 0), ^{
                 
-            }
-        });
+                @try{
+                    //存储cookies
+                    for (NSHTTPCookie *cookie in cookies) {
+                        [weakSelf.webView insertCookie:cookie];
+                    }
+                }@catch (NSException *e) {
+                    NSLog(@"failed: %@", e);
+                } @finally {
+                    
+                }
+            });
+        }
+        
     }
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
@@ -459,20 +470,20 @@ static MessageBlock messageCallback = nil;
         NSLog(@"%@",webView.URL.absoluteString);
     
     if ([webView.URL.absoluteString.lowercaseString isEqualToString:@"about:blank"]) {
-        
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [webView.backForwardList performSelector:NSSelectorFromString(@"_removeAllItems")];
 #pragma clang diagnostic pop
-        
+
     }
     
         isloadSuccess = YES;
         //获取当前 URLString
+        __weak typeof(self)weekSelf = self;
         [webView evaluateJavaScript:@"window.location.href" completionHandler:^(id _Nullable urlStr, NSError * _Nullable error) {
             if (error == nil) {
-                _currentURLString = urlStr;
-                //NSLog(@"currentURLStr : %@ ",_currentURLString);
+                weekSelf.currentURLString = urlStr;
             }
         }];
         
@@ -507,6 +518,57 @@ static MessageBlock messageCallback = nil;
     [self.activityIndicator stopAnimating];
 }
 
+
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler{
+    
+    NSLog(@"%@",challenge.protectionSpace.authenticationMethod.lowercaseString);
+    
+    NSString *hostName = webView.URL.host;
+    NSString *authenticationMethod = [[challenge protectionSpace] authenticationMethod];
+    if ([authenticationMethod isEqualToString:NSURLAuthenticationMethodDefault]
+        || [authenticationMethod isEqualToString:NSURLAuthenticationMethodHTTPBasic]
+        || [authenticationMethod isEqualToString:NSURLAuthenticationMethodHTTPDigest]) {
+        
+        NSString *title = @"Authentication Challenge";
+        NSString *message = [NSString stringWithFormat:@"%@ requires user name and password", hostName];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"User";
+            //textField.secureTextEntry = YES;
+        }];
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"Password";
+            textField.secureTextEntry = YES;
+        }];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            NSString *userName = ((UITextField *)alertController.textFields[0]).text;
+            NSString *password = ((UITextField *)alertController.textFields[1]).text;
+            
+            NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:userName password:password persistence:NSURLCredentialPersistenceNone];
+            
+            completionHandler(NSURLSessionAuthChallengeUseCredential, credential);
+            
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            completionHandler(NSURLSessionAuthChallengeUseCredential, nil);
+        }]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self presentViewController:alertController animated:YES completion:^{}];
+        });
+        
+    }
+    else if ([authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        // needs this handling on iOS 9
+        NSURLCredential *card = [[NSURLCredential alloc]initWithTrust:challenge.protectionSpace.serverTrust];
+        challenge.sender ? completionHandler(NSURLSessionAuthChallengeUseCredential,card) : NULL;
+    }
+    else {
+        completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+    }
+}
+
+
 #pragma mark -- navigationBar customUI
 #pragma mark 导航栏的菜单按钮
 /** 添加返回按钮 */
@@ -538,6 +600,7 @@ static MessageBlock messageCallback = nil;
 }
 
 - (void)goForward{
+    
     [self.webView canGoForward] ? [_webView goForward] : NULL;
 }
 
@@ -566,6 +629,7 @@ static MessageBlock messageCallback = nil;
 
 - (void)menuBtnAction:(UIButton *)sender
 {
+     __weak typeof(self)weekSelf = self;
     if (self.menu.defaultType) {
         NSMutableArray *buttonTitleArray = [NSMutableArray array];
         [buttonTitleArray addObjectsFromArray:@[@"safari打开", @"复制链接", @"分享", @"截图", @"刷新"]];
@@ -576,10 +640,10 @@ static MessageBlock messageCallback = nil;
          {
              if (buttonIndex == 0)
              {
-                 if (_currentURLString.length > 0)
+                 if (weekSelf.currentURLString.length > 0)
                  {
                      /*! safari打开 */
-                     [NSURL SafariOpenURL:[NSURL URLWithString:_currentURLString]];
+                     [NSURL safariOpenURL:[NSURL URLWithString:weekSelf.currentURLString]];
                      return;
                  }
                  else
@@ -590,9 +654,9 @@ static MessageBlock messageCallback = nil;
              else if (buttonIndex == 1)
              {
                  /*! 复制链接 */
-                 if (_currentURLString.length > 0)
+                 if (weekSelf.currentURLString.length > 0)
                  {
-                     [UIPasteboard generalPasteboard].string = _currentURLString;
+                     [UIPasteboard generalPasteboard].string = weekSelf.currentURLString;
                      return;
                  }
                  else
@@ -606,25 +670,25 @@ static MessageBlock messageCallback = nil;
              }
              else if (buttonIndex == 3)
              {
-                 [self snapshotBtn];
+                 [weekSelf snapshotBtn];
              }
              else if (buttonIndex == 4)
              {
                  /*! 刷新 */
-                 [_webView reloadFromOrigin];
+                 [weekSelf.webView reloadFromOrigin];
              }
          }];
     }else
     {
-        [self.menu customMenuShowInViewController:self
+        [weekSelf.menu customMenuShowInViewController:weekSelf
                                              title:@"更多"
                                            message:nil
-                                  buttonTitleArray:self.buttonTitle
+                                  buttonTitleArray:weekSelf.buttonTitle
                              buttonTitleColorArray:nil popoverPresentationControllerBlock:^(UIPopoverPresentationController * _Nonnull popover) {
             
         } block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex)
          {
-             _menuBlock ? _menuBlock(alertController, action, buttonIndex) : NULL;
+             weekSelf.menuBlock ? weekSelf.menuBlock(alertController, action, buttonIndex) : NULL;
          }];
     }
 }
@@ -695,10 +759,11 @@ static MessageBlock messageCallback = nil;
             
             if(progressValue >= 1.0f)
             {
+                __weak typeof(self)weekSelf = self;
                 [UIView animateWithDuration:0.3 delay:0.3 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                    [_wkProgressView setAlpha:0.0f];
+                    [weekSelf.wkProgressView setAlpha:0.0f];
                 } completion:^(BOOL finished) {
-                    [_wkProgressView setProgress:0.0f animated:NO];
+                    [weekSelf.wkProgressView setProgress:0.0f animated:NO];
                 }];
             }
         }
@@ -765,4 +830,5 @@ static MessageBlock messageCallback = nil;
 }
 
 @end
+
 
