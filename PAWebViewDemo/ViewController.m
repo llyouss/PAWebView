@@ -32,8 +32,7 @@ typedef void (^runCaseBlock)(id);
     
     //初始化，单例
     PAWebView *webView = [PAWebView shareInstance];
-    webView.openCache = YES;  //打开缓存
-    
+   
 //    webView setcookie:<#(NSHTTPCookie *)#>  //设置cookie
 //    [webView WKSharedHTTPCookieStorage];  //获取所有缓存的cookies
 //    [webView deleteAllWKCookies];  //删除所有缓存的cookies

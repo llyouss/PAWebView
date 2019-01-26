@@ -70,10 +70,10 @@ static MessageBlock messageCallback = nil;
     if (self = [super init]) {
         self.menu = [PAWebViewMenu shareInstance];
         self.menu.defaultType = YES;
-        self.openCache = YES;
         self.showLog = NO;
         [self loadRequestURL:[NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];  //初始化，提前加载。
         
+        //重写 NSURLProtocol
 //        [NSURLProtocol wk_registerScheme:@"http"];
 //        [NSURLProtocol wk_registerScheme:@"https"];
     }
