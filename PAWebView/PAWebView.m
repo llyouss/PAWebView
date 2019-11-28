@@ -194,10 +194,15 @@ static MessageBlock messageCallback = nil;
     _webView = _webView ? _webView : self.webView;
     NSString *Domain = request.URL.host;
 
-    /** 插入cookies JS */
-    if (Domain)[self.config.userContentController addUserScript:[_webView searchCookieForUserScriptWithDomain:Domain]];
-    /** 插入cookies PHP */
-    if (Domain)[request setValue:[_webView phpCookieStringWithDomain:Domain] forHTTPHeaderField:@"Cookie"];
+    if (@available(iOS 11.0, *)){
+      
+    }else{
+    
+        /** 插入cookies JS */
+        if (Domain)[self.config.userContentController addUserScript:[_webView searchCookieForUserScriptWithDomain:Domain]];
+        /** 插入cookies PHP */
+        if (Domain)[request setValue:[_webView phpCookieStringWithDomain:Domain] forHTTPHeaderField:@"Cookie"];
+    }
     
     [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];//重置空白界面
     [_webView loadRequest:request];
